@@ -36,7 +36,12 @@
 
 <div class="container">
     <div class="card">
-        <strong th:text="${category.name}">Category Title</strong>
+        <select name="categories" id="categories">
+            <option th:each="category : ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}">
+            </option>
+        </select>
     </div>
 
     <div id="products" class="row">
