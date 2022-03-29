@@ -5,7 +5,6 @@ import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Product;
 
 public class CartDaoMem implements CartDao {
-
     private final Cart cart = new Cart();
 
     private static CartDaoMem instance = null;
@@ -28,7 +27,7 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public Cart getCart(Product product) {
+    public Cart getCart(int id) {
         return cart;
     }
 }
