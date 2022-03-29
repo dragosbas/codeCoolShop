@@ -18,6 +18,9 @@ public class CartDaoMem implements CartDao {
         return instance;
     }
 
+    private CartDaoMem() {
+    }
+
     @Override
     public void addToCart(Product product) {
         cart.add(product);
