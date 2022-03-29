@@ -60,3 +60,12 @@
 {
     margin: 0 0 11px;
 }
+
+.card {
+    height: 100%;
+    overflow: hidden;
+}
+
+.card .card-header {
+    height: 10rem;
+}
