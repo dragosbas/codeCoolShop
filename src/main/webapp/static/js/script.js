@@ -1,47 +1,40 @@
-const suppliersOptions = document.querySelectorAll("option[data-supplier]");
-const categoryOptions = document.querySelectorAll("option[data-category]");
-console.log(suppliersOptions);
-console.log(categoryOptions);
+import {productCard} from "./productsFactory.js";
 
+// const suppliersOptions = document.querySelectorAll("option[data-supplier]");
+// const categoryOptions = document.querySelectorAll("option[data-category]");
+// console.log(suppliersOptions);
+// console.log(categoryOptions);
+const suppliersOption = document.querySelector("#suppliers");
+const categoryOption = document.querySelector("#categories");
+
+
+let supplierId = 1;
 
 
 const requestData = async (url) => {
-    // buttons.innerHTML =
-    //     "<button id='previous' type=\"button\">Previous</button>" +
-    //     "<button id='next' type=\"button\">Next</button>";
-    const request = await fetch(url, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        // body: JSON.stringify(page),
-    });
+
+    const request = await fetch(url);
 
     if (request.ok) {
-
-        const response =  await request.json();
-        // console.log(response.length);
-        // lastPage = !response.length;
-        return response;
+        return await request.json();
     }
 }
 
 
-const getProducts = () => {
-    // currentApiRequest = 'topNews';
-    requestData("/api/products/supplier?id=1").then(r => {
-        // if (!lastPage){
-        //     container.innerHTML = '';
-        // }
-        // r.map(card => {
-        //     container.innerHTML +=
-        //         `<div class="card">
-        //                 <a href="${card.url}" target="_blank">${card.title}</a>
-        //                 <p>${card.time_ago}</p>
-        //                 <p>${card.author}</p>
-        //             </div>`
-        // })
+const getProductsSupplier = () => {
+    const productContainer = document.querySelector("#products");
+    productContainer.innerHTML = '';
+    requestData(`/api/products/supplier?id=${supplierId}`).then(r => {
+
+        r.forEach(item => productContainer.innerHTML += productCard(item));
         console.log(r);
     })
 }
-getProducts();
+
+// supplierId = supplierOption.dataset.supplier)
+// suppliersOptions.forEach(supplierOption => supplierOption.addEventListener('click', console.log(supplierOption)));
+// suppliersOptions.forEach(supplierOption => supplierOption.addEventListener('click', getProductsSupplier));
+
+suppliersOption.addEventListener("change", () => supplierId =  suppliersOption.value);
+suppliersOption.addEventListener("change", getProductsSupplier);
+
