@@ -10,6 +10,7 @@ const addToCartButton = (e) => {
     if (e.target.tagName === "A" && e.target.classList.contains("add")) {
         console.log(e.target);
         changeCartNumber()
+        sendProductId(e.target);
     }
 }
 
@@ -19,7 +20,7 @@ productsContainer.addEventListener("click", addToCartButton);
 
 
 
-const requestData = async (url) => {
+const sendGetRequest = async (url) => {
 
     const request = await fetch(url);
 
@@ -28,11 +29,21 @@ const requestData = async (url) => {
     }
 }
 
+const sendPostRequest = async (url, data) => {
+    const request = await fetch(url, {
+        method : "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+}
+
 
 const getProductsSupplier = (supplierId) => {
     const productContainer = document.querySelector("#products");
     productContainer.innerHTML = '';
-    requestData(`/api/products/supplier?id=${supplierId}`).then(r => {
+    sendGetRequest(`/api/products/supplier?id=${supplierId}`).then(r => {
         r.forEach(item => productContainer.innerHTML += productCard(item));
         console.log(r);
     })
@@ -57,5 +68,15 @@ const changeCartNumber = () => {
 const onLoadCartItems = () => {
     cartItems.innerHTML = localStorage.getItem("cartNumber");
 }
+
 onLoadCartItems();
+
+const sendProductId = (aLink) => {
+    console.log(aLink.parentElement.children[0].dataset.id);
+    const itemId = {
+        itemId:  aLink.parentElement.children[0].dataset.id
+    }
+    sendPostRequest("/api/cart", itemId);
+    // console.log(aLink.closest("span[data-id]"));
+}
 

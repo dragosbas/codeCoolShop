@@ -13,6 +13,7 @@ export const productCard = (product) => {
                         <p class="lead">${product.price}</p>
                     </div>
                     <div class="card-text">
+                        <span data-id="${product.id}"></span>
                         <a class="btn btn-success add">Add to cart</a>
                     </div>
                 </div>

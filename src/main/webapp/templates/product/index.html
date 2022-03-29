@@ -46,6 +46,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
+                        <span th:data-id="${prod.getId()}"></span>
                         <a class="btn btn-success add">Add to cart</a>
                     </div>
                 </div>
