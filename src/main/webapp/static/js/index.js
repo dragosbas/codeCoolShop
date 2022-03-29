@@ -3,21 +3,19 @@ import {productCard} from "./productsFactory.js";
 
 const suppliersOption = document.querySelector("#suppliers");
 const categoryOption = document.querySelector("#categories");
-const productsContainer = document.querySelector("#products");
+const productsContainer = document.querySelectorAll(".card-btn-add");
 const cartItems = document.querySelector("#cartItems");
 
 const addToCartButton = (e) => {
-    if (e.target.tagName === "A" && e.target.classList.contains("add")) {
-        console.log(e.target);
-        changeCartNumber()
-        sendProductId(e.target);
-    }
+    changeCartNumber()
+    sendProductId(e.target.closest(".card-btn-add").dataset.id);
 }
 
-productsContainer.addEventListener("click", addToCartButton);
+console.log(productsContainer)
 
-
-
+productsContainer.forEach(product => {
+    product.addEventListener("click", addToCartButton)
+});
 
 
 const sendGetRequest = async (url) => {
@@ -71,10 +69,10 @@ const onLoadCartItems = () => {
 
 onLoadCartItems();
 
-const sendProductId = (aLink) => {
-    console.log(aLink.parentElement.children[0].dataset.id);
+const sendProductId = (id) => {
+    console.log(id);
     const itemId = {
-        itemId:  aLink.parentElement.children[0].dataset.id
+        itemId:  id
     }
     sendPostRequest("/api/cart", itemId);
     // console.log(aLink.closest("span[data-id]"));

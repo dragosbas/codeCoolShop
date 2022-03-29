@@ -1,18 +1,15 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<div th:replace="header.html :: copy"></div>
+<head >
+    <div th:replace="header.html :: header"></div>
+    <script type="module" src="/static/js/index.js" defer></script>
+</head>
 
 
 <body>
 
-<div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
-    <div>
-        <p>My Cart</p>
-        <a href="/cart"><span id="cartItems"></span><i class="fas fa-shopping-cart"></i></a>
-    </div>
-</div>
+<div th:replace="header.html :: navbar"></div>
 
 <div class="container">
 
@@ -45,8 +42,7 @@
                     <div class="card-text">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div class="card-text">
-                        <span th:data-id="${prod.getId()}"></span>
+                    <div class="card-btn-add" th:data-id="${prod.getId()}">
                         <a class="btn btn-success add">Add to cart</a>
                     </div>
                 </div>

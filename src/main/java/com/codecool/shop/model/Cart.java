@@ -41,11 +41,10 @@ public class Cart {
         }
         public void remove (Product product){
             if(cartItems.containsKey(product) && cartItems.get(product) - 1 > 0){
-                cartItems.put(product, cartItems.get(product) + 1);
+                cartItems.put(product, cartItems.get(product) - 1);
             }
             else{
                 cartItems.remove(product);;
             }
-
         }
     }

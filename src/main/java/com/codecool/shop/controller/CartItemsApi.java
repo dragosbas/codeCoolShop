@@ -27,12 +27,27 @@ public class CartItemsApi extends HttpServlet {
         String line;
         while ((line = reader.readLine()) != null) {
             buffer.append(line);
-//            buffer.append(System.lineSeparator());
         }
+
 
         Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
         CartDao cartDao = CartDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
         cartDao.addToCart(productDataStore.find(Integer.parseInt(jsonpObject.get("itemId"))));
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ObjectMapper objectMapper= new ObjectMapper();
+        StringBuffer buffer = new StringBuffer();
+        BufferedReader reader = req.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            buffer.append(line);
+        }
+        Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
+        CartDao cartDao = CartDaoMem.getInstance();
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        cartDao.removeFromCart(productDataStore.find(Integer.parseInt(jsonpObject.get("itemId"))));
     }
 }

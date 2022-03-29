@@ -24,8 +24,7 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cart= CartDaoMem.getInstance();
-
-//        //TODO check if i need productServices fully loaded
+//        TODO check if i need productServices fully loaded
 //        ProductDao productDataStore = ProductDaoMem.getInstance();
 //        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 //        SupplierDao supplierDao = SupplierDaoMem.getInstance();
