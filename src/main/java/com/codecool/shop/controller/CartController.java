@@ -2,15 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.model.Cart;
-import com.codecool.shop.service.ProductService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -20,6 +12,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {
@@ -37,7 +31,13 @@ public class CartController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
+        BigDecimal totalPrice= BigDecimal.ZERO;
+        for (int i = 0; i < cart.getCart(0).size(); i++)
+            totalPrice=totalPrice.add(cart.getCart(0).get(i).getDefaultPrice());
+
         context.setVariable("cart", cart.getCart(0));
+        context.setVariable("totalPrice", totalPrice.toString());
+
 //        context.setVariable("suppliers", supplierDao.getAll());
 //        context.setVariable("categories", productCategoryDataStore.getAll());
 //        context.setVariable("category", productService.getProductCategory(1));
