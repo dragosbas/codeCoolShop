@@ -33,7 +33,6 @@ const getProductsSupplier = (supplierId) => {
     const productContainer = document.querySelector("#products");
     productContainer.innerHTML = '';
     requestData(`/api/products/supplier?id=${supplierId}`).then(r => {
-
         r.forEach(item => productContainer.innerHTML += productCard(item));
         console.log(r);
     })

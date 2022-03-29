@@ -10,7 +10,7 @@
     <h1>Codecool Shop</h1>
     <div>
         <p>My Cart</p>
-        <a href="/cart"><i class="fas fa-shopping-cart"></i></a>
+        <a href="/cart"><span id="cartItems"></span><i class="fas fa-shopping-cart"></i></a>
     </div>
 </div>
 
@@ -46,7 +46,7 @@
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add">Add to cart</a>
                     </div>
                 </div>
             </div>
