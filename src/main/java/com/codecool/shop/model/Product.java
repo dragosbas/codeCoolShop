@@ -24,6 +24,14 @@ public class Product extends BaseModel {
         return defaultPrice;
     }
 
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
     public void setDefaultPrice(BigDecimal defaultPrice) {
         this.defaultPrice = defaultPrice;
     }

@@ -4,35 +4,48 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Data
 public class Cart {
 
-    List<Product> cartItems = new ArrayList<>();
+    private Map<Product, Integer> cartItems = new HashMap<>();
 
     public Cart() {
 
-            cartItems.add(new Product("chiloti",
+            cartItems.put(new Product("chiloti",
                     BigDecimal.valueOf(10),
                     "USD",
                     "cei mai curati ever !",
                     new ProductCategory("haine", "straie", "textle"),
                     new Supplier("Versace","scumpi"),
-                    "/"));
-            cartItems.add(new Product("maieu",
+                    "/"), 1);
+            cartItems.put(new Product("maieu",
                     BigDecimal.valueOf(20),
                     "USD",
                     "gri !",
                     new ProductCategory("haine", "straie", "textle"),
                     new Supplier("Vaslui","ieftini"),
-                    "/"));
+                    "/"), 1);
         }
 
         public void add (Product product){
-            cartItems.add(product);
+            if(cartItems.containsKey(product)){
+                cartItems.put(product, cartItems.get(product) + 1);
+            }
+            else{
+                cartItems.put(product, 1);
+            }
         }
         public void remove (Product product){
-            cartItems.remove(product);
+            if(cartItems.containsKey(product) && cartItems.get(product) - 1 > 0){
+                cartItems.put(product, cartItems.get(product) + 1);
+            }
+            else{
+                cartItems.remove(product);;
+            }
+
         }
     }

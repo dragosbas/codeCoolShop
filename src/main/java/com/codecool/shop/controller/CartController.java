@@ -3,6 +3,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -13,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(urlPatterns = {"/cart"})
@@ -31,9 +34,12 @@ public class CartController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        BigDecimal totalPrice= BigDecimal.ZERO;
-        for (int i = 0; i < cart.getCart(0).size(); i++)
-            totalPrice=totalPrice.add(cart.getCart(0).get(i).getDefaultPrice());
+        BigDecimal totalPrice = BigDecimal.ZERO;
+
+        for (Map.Entry<Product, Integer> entry : cart.getCart(0).entrySet()) {
+            totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
+        }
+
 
         context.setVariable("cart", cart.getCart(0));
         context.setVariable("totalPrice", totalPrice.toString());
