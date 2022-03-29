@@ -1,3 +1,10 @@
+const suppliersOptions = document.querySelectorAll("option[data-supplier]");
+const categoryOptions = document.querySelectorAll("option[data-category]");
+console.log(suppliersOptions);
+console.log(categoryOptions);
+
+
+
 const requestData = async (url) => {
     // buttons.innerHTML =
     //     "<button id='previous' type=\"button\">Previous</button>" +
@@ -22,7 +29,7 @@ const requestData = async (url) => {
 
 const getProducts = () => {
     // currentApiRequest = 'topNews';
-    requestData("/api/get-products").then(r => {
+    requestData("/api/products/supplier?id=1").then(r => {
         // if (!lastPage){
         //     container.innerHTML = '';
         // }
