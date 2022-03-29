@@ -13,7 +13,7 @@ export const productCard = (product) => {
                         <p class="lead">${product.price}</p>
                     </div>
                     <div class="card-text">
-                        <a class="btn btn-success" href="#">Add to cart</a>
+                        <a class="btn btn-success add">Add to cart</a>
                     </div>
                 </div>
             </div>
