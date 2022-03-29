@@ -1,5 +1,10 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,5 +28,12 @@ public class CartItemsApi extends HttpServlet {
         }
         String data = buffer.toString();
         System.out.println(data);
+
+        String linkId = req.getParameter("itemId");
+
+        CartDao cartDao = new CartDaoMem();
+
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        cartDao.addToCart(productDataStore.find(id));
     }
 }
