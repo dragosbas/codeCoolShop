@@ -141,17 +141,13 @@ li {
 
 /*Cart*/
 
-/*Cart Container*/
 
 .cart-container {
     display: grid;
     grid-template-columns: 3fr 1fr;
+    min-height: 75vh;
 }
 
-/*.items-container {*/
-/*    display: grid;*/
-/*    grid-template-columns: repeat(3, 1fr);*/
-/*}*/
 
 .items-container > div {
     max-width: 20rem;
@@ -184,4 +180,10 @@ li {
 .price .btn {
     width: 100%;
     justify-self: center;
+}
+
+/*Footer */
+
+.footer {
+    margin-top: 2rem;
 }
