@@ -19,7 +19,7 @@ import java.util.Map;
 
 //TODO after creating the order
 
-@WebServlet(name = "cardDetails", urlPatterns = "/card-details", loadOnStartup = 2)
+@WebServlet(name = "cardPayment", urlPatterns = "/card-payment", loadOnStartup = 7)
 public class CardDetailsController extends HttpServlet {
 
     @Override
@@ -33,6 +33,6 @@ public class CardDetailsController extends HttpServlet {
 
         context.setVariable("cart", cart.getCart(0));
 
-        engine.process("/product/checkout-form.html", context, resp.getWriter());
+        engine.process("/product/card-payment.html", context, resp.getWriter());
     }
 }

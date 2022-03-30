@@ -60,7 +60,8 @@ public class FormController extends HttpServlet {
 
         orderDao.createOrder(clientDetails, cart);
 
-        resp.sendRedirect(req.getContextPath() + "/");
+        //TODO redirect to payment page
+        resp.sendRedirect(req.getContextPath() + "/card-payment");
 
 
     }
