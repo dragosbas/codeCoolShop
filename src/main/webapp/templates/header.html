@@ -29,12 +29,20 @@
 
 
 
-<div th:fragment="navbar" class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
-    <div>
-        <p>My Cart</p>
-        <a href="/cart"><span id="cartItems"></span><i class="fas fa-shopping-cart"></i></a>
+
+
+<nav th:fragment="navigation" class="navigation">
+    <a href="/">CodeCool Shop</a>
+    <ul>
+        <li><a href="/cart"><span id="cartItems"></span><i class="fas fa-shopping-cart"></i></a></li>
+    </ul>
+    <div class="hamburger">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
     </div>
-</div>
+</nav>
+
+
 
 

@@ -8,9 +8,9 @@
 
 <body>
 
-<div th:replace="header.html :: navbar"></div>
 
-<a href="/">Home</a>
+<nav th:replace="header.html :: navigation"></nav>
+
 <div class="container">
     <div id="products" class="row">
         <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod: ${cart.keySet()}">
