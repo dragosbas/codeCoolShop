@@ -14,7 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -29,6 +31,7 @@ public class CartController extends HttpServlet {
 //        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
 //        SupplierDao supplierDao = SupplierDaoMem.getInstance();
 //        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

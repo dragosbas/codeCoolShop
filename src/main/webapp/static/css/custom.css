@@ -84,6 +84,15 @@ li {
     margin-top: 4.1rem;
 }
 
+.products-list {
+    margin-top: 2rem;
+}
+
+.products-list > li {
+    border-bottom: 1px dotted #444;
+    margin-bottom: 1rem;
+}
+
 
 /* Navbar */
 
@@ -153,6 +162,7 @@ li {
 }
 
 
+
 .items-container > div {
     max-width: 20rem;
 }
@@ -165,10 +175,10 @@ li {
 
 .price {
     background: rgb(0, 0,0, .03);
-    max-height: 10rem;
+    max-height: 30rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: start;
     padding: 1rem;
 }
 

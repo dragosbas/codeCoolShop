@@ -13,26 +13,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-@WebServlet(name = "Form", urlPatterns = "/checkout", loadOnStartup = 6)
-public class FormController extends HttpServlet {
+
+@WebServlet(name = "cardDetails", urlPatterns = "/card-details", loadOnStartup = 2)
+public class CardDetailsController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         CartDao cart= CartDaoMem.getInstance();
 
-        BigDecimal totalPrice = BigDecimal.ZERO;
-
-        for (Map.Entry<Product, Integer> entry : cart.getCart(0).entrySet()) {
-            totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
-        }
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        context.setVariable("totalPrice", totalPrice.toString());
+
+
         context.setVariable("cart", cart.getCart(0));
 
         engine.process("/product/checkout-form.html", context, resp.getWriter());
