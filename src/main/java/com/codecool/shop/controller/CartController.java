@@ -26,13 +26,6 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         CartDao cart= CartDaoMem.getInstance();
-//        TODO check if i need productServices fully loaded
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
-
-
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
@@ -42,16 +35,8 @@ public class CartController extends HttpServlet {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
-
         context.setVariable("cart", cart.getCart(0));
         context.setVariable("totalPrice", totalPrice.toString());
-
-//        context.setVariable("suppliers", supplierDao.getAll());
-//        context.setVariable("categories", productCategoryDataStore.getAll());
-//        context.setVariable("category", productService.getProductCategory(1));
-//        context.setVariable("products", productService.getProductsForCategory(1));
-
-
         engine.process("/cart.html", context, resp.getWriter());
     }
 

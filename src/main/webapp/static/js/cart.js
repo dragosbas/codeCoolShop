@@ -21,8 +21,11 @@ function addToCart(event) {
 
 function removeFromCart(event) {
     let id = event.target.closest(".card-btn-remove").dataset.id
-    let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText)
-    event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue - 1;
+    let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText) - 1
+    event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue;
+    if(textValue === 0){
+        event.target.closest(".card").remove();
+    }
     changeCartNumberMinus()
     removeProduct(id)
 }
@@ -69,22 +72,22 @@ const changeCartNumberPlus = () => {
     } else {
         localStorage.setItem("cartNumber", 1);
     }
-    cartItems.innerHTML = localStorage.getItem("cartNumber");
+    cartItems.innerText = localStorage.getItem("cartNumber");
 }
 
 const changeCartNumberMinus = () => {
     let productsNumber = localStorage.getItem("cartNumber");
 
-    if (productsNumber) {
+    if (productsNumber - 1 > 0) {
         localStorage.setItem("cartNumber", parseInt(productsNumber) - 1);
     } else {
-        localStorage.setItem("cartNumber", 1);
+        localStorage.removeItem("cartNumber");
     }
-    cartItems.innerHTML = localStorage.getItem("cartNumber");
+    cartItems.innerText = localStorage.getItem("cartNumber");
 }
 
 const onLoadCartItems = () => {
-    cartItems.innerHTML = localStorage.getItem("cartNumber");
+    cartItems.innerText = localStorage.getItem("cartNumber");
 }
 
 onLoadCartItems();
