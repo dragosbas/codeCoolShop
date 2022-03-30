@@ -11,9 +11,9 @@
 
 <nav th:replace="header.html :: navigation"></nav>
 
-<div class="container">
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod: ${cart.keySet()}">
+<div class="container cart-container">
+    <div id="products" class="items-container">
+        <div th:each="prod: ${cart.keySet()}">
             <div class="card">
                 <img class="" th:src="${prod.img}" alt="" />
                 <div class="card-header">
@@ -36,8 +36,17 @@
                 </div>
             </div>
         </div>
-        <h1>PRETUL TOTAL :</h1>
-        <h1 th:text="${totalPrice}"> </h1>
+    </div>
+    <div class="price">
+        <div>
+            <h1>Total Price</h1>
+            <h1 th:text="${totalPrice}"> </h1>
+        </div>
+        <div>
+            <a class="btn btn-success">Continue</a>
+        </div>
+
+
     </div>
 
 </div>
