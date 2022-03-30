@@ -80,6 +80,10 @@ li {
     list-style: none;
 }
 
+.container {
+    margin-top: 4.1rem;
+}
+
 
 /* Navbar */
 
@@ -173,6 +177,13 @@ li {
     margin: 0px 1rem;
 }
 
+.price h1 {
+    text-align: center;
+    display: block;
+    margin: 0 auto;
+}
+
+
 .price div:last-child {
     margin: 1.5rem 1rem 0px;
 }
@@ -194,8 +205,69 @@ li {
 }
 
 
+/*Form*/
+
+.form-page {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    gap: 2rem;
+}
+
+
+.form-wrapper {
+    margin: 0 auto;
+    background: rgb(0, 0, 0, .03);
+    text-align: center;
+    /*width: 40%;*/
+}
+
+form {
+    padding: 1rem;
+}
+
+.form-group {
+    margin: 2rem 17px 17px;
+    text-align: left !important;
+}
+
+.form-group label {
+    margin-top: 1rem;
+}
+
+.form-group input:focus+label {
+    color: red;
+}
+
+h1 {
+    display: inline-block;
+    margin-top: 20px;
+    margin-bottom: 0px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: grey;
+}
+
+input {
+    width: 100%;
+    border: 1px solid #ccc;
+    height: 30px;
+    border-radius: 5px;
+
+}
+
+textarea {
+    width: 100%;
+}
+
+
+
+
 /*Footer */
 
 .footer {
     margin-top: 2rem;
+    text-align: center;
 }
