@@ -13,11 +13,15 @@ removeProductsButtons.forEach(btn => {
 
 function addToCart(event) {
     let id = event.target.closest(".card-btn-add").dataset.id
+    let textValue = parseInt(event.target.closest(".card-btn-add").previousElementSibling.innerText)
+    event.target.closest(".card-btn-add").previousElementSibling.innerText = textValue + 1;
     addProduct(id)
 }
 
 function removeFromCart(event) {
     let id = event.target.closest(".card-btn-remove").dataset.id
+    let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText)
+    event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue - 1;
     removeProduct(id)
 }
 
