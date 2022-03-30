@@ -13,11 +13,17 @@ removeProductsButtons.forEach(btn => {
 
 function addToCart(event) {
     let id = event.target.closest(".card-btn-add").dataset.id
+    let textValue = parseInt(event.target.closest(".card-btn-add").previousElementSibling.innerText)
+    event.target.closest(".card-btn-add").previousElementSibling.innerText = textValue + 1;
+    changeCartNumberPlus()
     addProduct(id)
 }
 
 function removeFromCart(event) {
     let id = event.target.closest(".card-btn-remove").dataset.id
+    let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText)
+    event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue - 1;
+    changeCartNumberMinus()
     removeProduct(id)
 }
 
@@ -54,3 +60,31 @@ const sendDeleteRequest = async (url, data) => {
         body: JSON.stringify(data)
     })
 }
+
+const changeCartNumberPlus = () => {
+    let productsNumber = localStorage.getItem("cartNumber");
+
+    if (productsNumber) {
+        localStorage.setItem("cartNumber", parseInt(productsNumber) + 1);
+    } else {
+        localStorage.setItem("cartNumber", 1);
+    }
+    cartItems.innerHTML = localStorage.getItem("cartNumber");
+}
+
+const changeCartNumberMinus = () => {
+    let productsNumber = localStorage.getItem("cartNumber");
+
+    if (productsNumber) {
+        localStorage.setItem("cartNumber", parseInt(productsNumber) - 1);
+    } else {
+        localStorage.setItem("cartNumber", 1);
+    }
+    cartItems.innerHTML = localStorage.getItem("cartNumber");
+}
+
+const onLoadCartItems = () => {
+    cartItems.innerHTML = localStorage.getItem("cartNumber");
+}
+
+onLoadCartItems();
