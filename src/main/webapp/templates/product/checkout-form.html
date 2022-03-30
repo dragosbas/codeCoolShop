@@ -10,7 +10,7 @@
 <div class="container form-page">
 
     <div class="form-wrapper">
-        <form action="/payment-gateway" method="POST">
+        <form action="/checkout" method="POST">
             <div class="form-group">
                 <label for="first-name">First Name</label>
                 <input required type="text" name="first-name" id="first-name"/>
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="address">Address</label>
-                <textarea  name="address" id="address"></textarea>
+                <textarea required name="address" id="address"></textarea>
             </div>
             <button class="btn btn-success mb-2" type="submit">Go To Payment</button>
             <p>
