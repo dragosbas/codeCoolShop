@@ -86,4 +86,8 @@ public class Product extends BaseModel {
                 this.productCategory.getName(),
                 this.supplier.getName());
     }
+
+    public String getName() {
+        return this.name;
+    }
 }

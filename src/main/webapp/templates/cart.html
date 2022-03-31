@@ -42,8 +42,15 @@
             <h1>Total Price</h1>
             <h1 th:text="${totalPrice}"> </h1>
         </div>
+        <ul class="products-list">
+            <li th:each="product : ${cart}"
+            th:text = "${product.key.name}"
+            ></li>
+<!--            TODO read the value-->
+<!--            <span th:text="${product.getValue}"></span>-->
+        </ul>
         <div>
-            <a class="btn btn-success">Continue</a>
+            <a href="/checkout" class="btn btn-success">Continue</a>
         </div>
 
 

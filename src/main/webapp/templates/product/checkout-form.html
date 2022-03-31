@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <div th:replace="header.html :: header"></div>
+    <script type="module" src="/static/js/checkout-form.js" defer></script>
+</head>
+<body>
+<nav th:replace="header.html :: navigation"></nav>
+
+<div class="container form-page">
+
+    <div class="form-wrapper">
+        <form action="/payment-gateway" method="POST">
+            <div class="form-group">
+                <label for="first-name">First Name</label>
+                <input required type="text" name="first-name" id="first-name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input required type="text" name="last-name" id="last-name"/>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input required type="email" name="email" id="email"/>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input required type="tel" name="phone" id="phone"/>
+            </div>
+
+            <div class="form-group">
+                <label for="address">Address</label>
+                <textarea  name="address" id="address"></textarea>
+            </div>
+            <button class="btn btn-success mb-2" type="submit">Go To Payment</button>
+            <p>
+                By clicking the button  you agree to our
+                <a href="#">Terms</a> and
+                <a href="#">Conditions</a>
+            </p>
+        </form>
+    </div>
+    <div class="price">
+        <div>
+            <h1>Total Price</h1>
+            <h1 id="number" th:text="${totalPrice}"> </h1>
+        </div>
+        <ul class="products-list">
+            <li th:each="product : ${cart}"
+                th:text = "${product.key.name}"
+            ></li>
+            <!--            TODO read the value-->
+            <!--            <span th:text="${product.getValue}"></span>-->
+        </ul>
+    </div>
+</div>
+
+    <div th:replace="footer.html :: copy"></div>
+
+</body>
+</html>
