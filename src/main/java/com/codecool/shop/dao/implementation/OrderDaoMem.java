@@ -5,20 +5,46 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.model.Cart;
 import com.codecool.shop.model.Order;
 import lombok.Data;
-import java.util.HashMap;
-import java.util.Map;
+
+import java.util.*;
 
 @Data
 public class OrderDaoMem  implements OrderDao {
-    Order order = new Order();
+   List<Order> orders = new ArrayList<>();
+   private static OrderDaoMem instance = null;
 
-    @Override
-    public void createOrder(Map<String, String> clientDetails, CartDao cart) {
-        order.createOrder(clientDetails, cart);
+    public static OrderDao getInstance() {
+        if (instance == null) {
+            instance = new OrderDaoMem();
+        }
+        return instance;
     }
 
+    private OrderDaoMem(){
+
+    }
+
+
     @Override
-    public Order getOrder(HashMap<String, String> clientDetails) {
+    public Order createOrder(Map<String, String> clientDetails, CartDao cart) {
+        Order order = new Order(clientDetails, cart);
+        orders.add(order);
         return order;
+
     }
+
+    @Override
+    public Order getOrder(UUID orderId) {
+        for (Order order : orders) {
+            if (order.getOrderId() == orderId)
+                return order;
+        }
+        return null;
+    }
+
+    public void confirmOrder() {
+//        order.setOrderConfirmed(true);
+    }
+
+
 }

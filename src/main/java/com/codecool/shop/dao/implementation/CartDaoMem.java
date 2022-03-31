@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CartDaoMem implements CartDao {
-    private final Cart cart = new Cart();
+    private Cart cart = new Cart();
 
     private static CartDaoMem instance = null;
 
@@ -35,5 +35,10 @@ public class CartDaoMem implements CartDao {
     @Override
     public Map<Product, Integer> getCart(int id) {
         return cart.getCartItems();
+    }
+
+    @Override
+    public void emptyCart() {
+        cart = new Cart();
     }
 }

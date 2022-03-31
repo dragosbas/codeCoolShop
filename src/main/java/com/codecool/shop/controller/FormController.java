@@ -7,7 +7,9 @@ import com.codecool.shop.dao.OrderDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.dao.implementation.OrderDaoMem;
 import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.OrderService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -16,10 +18,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @WebServlet(name = "Form", urlPatterns = "/checkout", loadOnStartup = 6)
 public class FormController extends HttpServlet {
@@ -40,30 +45,10 @@ public class FormController extends HttpServlet {
         context.setVariable("totalPrice", totalPrice.toString());
         context.setVariable("cart", cart.getCart(0));
 
+
         engine.process("/product/checkout-form.html", context, resp.getWriter());
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        CartDao cart= CartDaoMem.getInstance();
-        OrderDao orderDao = new OrderDaoMem();
-
-        Map<String, String> clientDetails = new HashMap<>();
-        CartDao clientCart = cart;
-
-
-        clientDetails.put("First Name", req.getParameter("first-name"));
-        clientDetails.put("Last Name", req.getParameter("last-name"));
-        clientDetails.put("Email", req.getParameter("email"));
-        clientDetails.put("Phone", req.getParameter("phone"));
-        clientDetails.put("Address", req.getParameter("address"));
-
-        orderDao.createOrder(clientDetails, cart);
-
-        //TODO redirect to payment page
-        resp.sendRedirect(req.getContextPath() + "/card-payment");
-
 
     }
+
+
 }

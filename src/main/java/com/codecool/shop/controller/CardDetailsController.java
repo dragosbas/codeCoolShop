@@ -3,7 +3,9 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.model.Order;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.service.OrderService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -26,12 +28,14 @@ public class CardDetailsController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         CartDao cart= CartDaoMem.getInstance();
+        OrderService orderService = new OrderService();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
 
         context.setVariable("cart", cart.getCart(0));
+//        context.setVariable("order", order);
 
         engine.process("/product/card-payment.html", context, resp.getWriter());
     }

@@ -5,13 +5,16 @@ import com.codecool.shop.model.Order;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 
 public interface OrderDao {
 
-    void createOrder(Map<String, String> clientDetails, CartDao cart);
+    Order createOrder(Map<String, String> clientDetails, CartDao cart);
 
     //TODO idk how what is the parameter to get the order, probably a client id
-    Order getOrder(HashMap<String, String> clientDetails);
+    Order getOrder(UUID orderID);
+
+    void confirmOrder();
 
 }
