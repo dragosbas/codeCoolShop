@@ -1,13 +1,13 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Role;
+import com.codecool.shop.model.User;
+import com.codecool.shop.serializations.ProductSerialization;
 import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -15,10 +15,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "prodsByCategoryServlet", urlPatterns = "/api/products/category", loadOnStartup = 2)
 public class ProductsCategoryJSON extends HttpServlet {
@@ -58,5 +60,39 @@ public class ProductsCategoryJSON extends HttpServlet {
         sw.close();
 
         return sw.toString();
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductSerialization ps = new ProductSerialization();
+        Map<String, String> params = ps.parseReqParams(req);
+
+        UserDao userDao = UserDaoMem.getInstance();
+        CartDao cartDao = CartDaoMem.getInstance();
+        UserService users = new UserService(userDao, cartDao);
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+        boolean added = false;
+
+        System.out.println(params);
+
+        if(params.containsKey("name") && params.containsKey("password")){
+            User user= users.getUser(params.get("name"));
+
+            if(user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN){
+                added = productService.addProductCategory(params.get("category"), params.get("department"), params.get("description"));
+            }
+        }
+
+        PrintWriter out = resp.getWriter();
+
+        if(added){
+            out.println(HttpServletResponse.SC_ACCEPTED);
+        }
+        else{
+            out.println(HttpServletResponse.SC_EXPECTATION_FAILED);
+        }
     }
 }

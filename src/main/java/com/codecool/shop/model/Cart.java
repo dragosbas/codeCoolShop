@@ -26,7 +26,7 @@ public class Cart {
                 cartItems.put(product, cartItems.get(product) - 1);
             }
             else{
-                cartItems.remove(product);;
+                cartItems.remove(product);
             }
         }
     }
