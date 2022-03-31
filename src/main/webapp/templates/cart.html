@@ -41,12 +41,12 @@
             <h1 th:text="${totalPrice}" id="total-price"></h1>
         </div>
         <ul class="products-list">
-            <li th:each="product : ${cart}"
-                th:text = "${product.key.name}"
-                th:data-id="${product.key.id}"
-            ></li>
-<!--            TODO read the value-->
-<!--            <span th:text="${product.getValue}"></span>-->
+            <li th:each="product : ${cart.keySet()}">
+                <span th:text = "${product.name}"
+                th:data-id="${product.id}"
+                >Name</span>
+                <span th:id="'qty-' + ${product.id}" th:text="${cart.get(product)}">Quantity</span>
+            </li>
         </ul>
         <div>
             <a href="/checkout" class="btn btn-success">Continue</a>
