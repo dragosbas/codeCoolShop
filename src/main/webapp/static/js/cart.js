@@ -18,7 +18,7 @@ function updatePrice(id, number) {
     let newTotal = parseFloat(totalPrice.innerText);
     newTotal += parseFloat(prodPrice.innerText) * number;
 
-    totalPrice.innerText = newTotal;
+    totalPrice.innerText = newTotal.toFixed(2);
 }
 
 function addToCart(event) {

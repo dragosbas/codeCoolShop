@@ -14,7 +14,9 @@
 <div class="container cart-container">
     <div id="products" class="items-container">
         <div class="card" th:each="prod: ${cart.keySet()}">
-            <img class="" th:src="${prod.img}" alt="" />
+            <picture class="product-img-holder">
+                <img class="product-img img-fluid my-auto" th:src="${prod.img}" alt="" />
+            </picture>
             <div class="card-header">
                 <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                 <p class="card-text" th:text="${prod.description}">Product description... </p>

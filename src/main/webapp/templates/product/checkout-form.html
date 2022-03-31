@@ -49,10 +49,10 @@
             <h1 id="number" th:text="${totalPrice}"> </h1>
         </div>
         <ul class="products-list">
-            <li th:each="product : ${cart.keySet()}"
-                th:text = "${product.name}">
-
-            <span th:text="${cart.get(product)}"></span>
+            <li th:each="product : ${cart.keySet()}" th:data-id="${product.id}">
+                <span th:text = "${product.name}"
+                >Name</span>
+                <span th:id="'qty-' + ${product.id}" th:text="${cart.get(product)}">Quantity</span>
             </li>
         </ul>
     </div>
