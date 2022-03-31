@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 //TODO after creating the order
 
@@ -34,7 +35,7 @@ public class CardDetailsController extends HttpServlet {
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
 
-        context.setVariable("cart", cart.getCart(0));
+        context.setVariable("cart", cart.getCart(UUID.randomUUID()));
 //        context.setVariable("order", order);
 
         engine.process("/product/card-payment.html", context, resp.getWriter());

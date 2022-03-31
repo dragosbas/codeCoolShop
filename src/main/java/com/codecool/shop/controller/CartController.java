@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(urlPatterns = {"/cart"})
@@ -32,11 +29,11 @@ public class CartController extends HttpServlet {
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 
-        for (Map.Entry<Product, Integer> entry : cart.getCart(0).entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.getCart(UUID.randomUUID()).entrySet()) {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
-        context.setVariable("cart", cart.getCart(0));
+        context.setVariable("cart", cart.getCart(UUID.randomUUID()));
         context.setVariable("totalPrice", totalPrice.toString());
         engine.process("/cart.html", context, resp.getWriter());
     }

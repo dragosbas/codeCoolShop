@@ -6,6 +6,7 @@ import com.codecool.shop.model.Product;
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class CartDaoMem implements CartDao {
     private Cart cart = new Cart();
@@ -33,7 +34,7 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public Map<Product, Integer> getCart(int id) {
+    public Map<Product, Integer> getCart(UUID id) {
         return cart.getCartItems();
     }
 
