@@ -17,9 +17,6 @@ const addToCartButton = (e) => {
 productsContainer.addEventListener("click", addToCartButton);
 
 
-
-
-
 const sendGetRequest = async (url) => {
 
     const request = await fetch(url);
@@ -31,7 +28,7 @@ const sendGetRequest = async (url) => {
 
 const sendPostRequest = async (url, data) => {
     const request = await fetch(url, {
-        method : "POST",
+        method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
@@ -50,8 +47,18 @@ const getProductsSupplier = (supplierId) => {
 }
 
 
-
 suppliersOption.addEventListener("change", () => getProductsSupplier(suppliersOption.value));
+
+function getProductsCategory(categoryId) {
+    const productContainer = document.querySelector("#products");
+    productContainer.innerHTML = '';
+    sendGetRequest(`/api/products/category?id=${categoryId}`).then(r => {
+        r.forEach(item => productContainer.innerHTML += productCard(item));
+        console.log(r);
+    })
+}
+
+categoryOption.addEventListener("change", () => getProductsCategory(categoryOption.value));
 
 const changeCartNumber = () => {
     let productsNumber = localStorage.getItem("cartNumber");
@@ -75,7 +82,7 @@ const sendProductId = (aLink) => {
     let id = aLink.closest(".card-btn-add").dataset.id
     console.log(id);
     const itemId = {
-        itemId:  id
+        itemId: id
     }
     sendPostRequest("/api/cart", itemId);
     // console.log(aLink.closest("span[data-id]"));
