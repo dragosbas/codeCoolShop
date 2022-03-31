@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="header.html :: header"></div>
+    <script type="module" src="/static/js/index.js" defer></script>
+</head>
+
+
+<body>
+
+
+<nav th:replace="header.html :: navigation"></nav>
+
+<div class="container">
+    <span> Dear Client,
+  Thank you for placing your order in our online store - Codecool Shop and we are very pleased that you have chosen us!  This email confirms the receipt of the order and the start of its processing.  We'll send you an email with the invoice for this order after the payment has been made and registered in our system.
+  For questions related to your order, please do not contact the e-mail address: info@codecool.ro or the phone number: 021.89.89.809, from Monday to Friday between 08:00 and 17:00.</span>
+    <a>
+        <i class="fas fa-truck"></i>
+    </a>
+    <a href="/">
+        <button type="button" class="btn btn-info">Back to home !</button>
+    </a>
+</div>
+
+
+</body>
+</html>
