@@ -15,10 +15,7 @@ function updatePrice(id, number) {
     const totalPrice = document.getElementById("total-price");
     const prodPrice = document.getElementById(`price-${id}`);
 
-    console.log(totalPrice)
-    console.log(prodPrice)
     let newTotal = parseFloat(totalPrice.innerText);
-
     newTotal += parseFloat(prodPrice.innerText) * number;
 
     totalPrice.innerText = newTotal;
@@ -26,8 +23,9 @@ function updatePrice(id, number) {
 
 function addToCart(event) {
     let id = event.target.closest(".card-btn-add").dataset.id
-    let textValue = parseInt(event.target.closest(".card-btn-add").previousElementSibling.innerText)
-    event.target.closest(".card-btn-add").previousElementSibling.innerText = textValue + 1;
+    let textValue = parseInt(event.target.closest(".card-btn-add").previousElementSibling.innerText) + 1
+    event.target.closest(".card-btn-add").previousElementSibling.innerText = textValue;
+    document.getElementById(`qty-${id}`).innerText = textValue;
     updatePrice(id, 1)
     changeCartNumberPlus()
     addProduct(id)
@@ -37,11 +35,11 @@ function removeFromCart(event) {
     let id = event.target.closest(".card-btn-remove").dataset.id
     let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText) - 1
     event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue;
+    document.getElementById(`qty-${id}`).innerText = textValue;
     updatePrice(id, -1)
 
     if(textValue === 0){
         event.target.closest(".card").remove();
-        console.log(document.querySelector(`li[data-id="${id}"]`))
         document.querySelector(`li[data-id="${id}"]`).remove();
     }
     changeCartNumberMinus()
