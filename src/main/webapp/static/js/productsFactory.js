@@ -1,8 +1,7 @@
 
 
 export const productCard = (product) => {
-    return `<div class="col col-sm-12 col-md-6 col-lg-4">
-            <div class="card">
+    return `<div class="card">
             <picture class="product-img-holder">
                 <img class="product-img img-fluid my-auto" src='${product.img}' alt="">
             </picture>
@@ -19,5 +18,5 @@ export const productCard = (product) => {
                     </div>
                 </div>
             </div>
-        </div>`
+        `
 }

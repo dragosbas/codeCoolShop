@@ -31,8 +31,8 @@
         </select>
     </div>
 
-    <div id="products" class="row">
-        <div class="col col-sm-12 col-md-6 col-lg-4" th:each="prod,iterStat : ${products}">
+    <div id="products" class="container index-items-container">
+        <div th:each="prod,iterStat : ${products}">
             <div class="card">
                 <picture class="product-img-holder">
                     <img class="product-img img-fluid my-auto" th:src="${prod.img}" alt="" />
