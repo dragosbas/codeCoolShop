@@ -165,6 +165,17 @@ li {
     transform: translateY(-50%);
 }
 
+.index-items-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.3rem;
+}
+
+#products {
+    margin-top: 1rem;
+}
+
+
 /*.card .product-img-holder  .product-img {*/
 /*    !*text-align: center;*!*/
 /*    !*object-fit: contain;*!*/
