@@ -4,6 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.service.OrderService;
+import com.codecool.shop.utils.LoggerService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -58,12 +59,14 @@ public class OrderControllerApi extends HttpServlet {
 
         HttpSession session=req.getSession();
         UUID orderId = (UUID) session.getAttribute("order-id");
+        LoggerService l = LoggerService.getInstance();
 
         OrderService orderService = new OrderService();
 
         Order currentOrder = orderService.getOrder(orderId);
 
         //TODO add to DB, next sprint
+        l.log(currentOrder);
         currentOrder.setOrderConfirmed(true);
     }
 }

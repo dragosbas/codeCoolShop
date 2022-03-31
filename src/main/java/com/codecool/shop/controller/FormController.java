@@ -36,14 +36,14 @@ public class FormController extends HttpServlet {
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 
-        for (Map.Entry<Product, Integer> entry : cart.getCart(0).entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cart.getCart(UUID.randomUUID()).entrySet()) {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("totalPrice", totalPrice.toString());
-        context.setVariable("cart", cart.getCart(0));
+        context.setVariable("cart", cart.getCart(UUID.randomUUID()));
 
 
         engine.process("/product/checkout-form.html", context, resp.getWriter());
