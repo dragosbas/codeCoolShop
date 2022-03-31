@@ -1,7 +1,7 @@
 package com.codecool.shop.utils;
-
 import com.codecool.shop.model.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -19,8 +19,8 @@ public class LoggerService {
     private final SimpleFormatter formatter = new SimpleFormatter();
 
     private LoggerService() throws IOException {
-        logger.addHandler(fh);
         fh.setFormatter(formatter);
+        logger.addHandler(fh);
     }
 
     public static LoggerService getInstance() throws IOException {
@@ -33,7 +33,10 @@ public class LoggerService {
     public void log(Order order) throws IOException {
         final StringWriter sw = new StringWriter();
         final ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(sw, "Order ID: " + order.getOrderId().toString());
+        mapper.writeValue(sw, "Status: " + order.isOrderConfirmed());
         mapper.writeValue(sw, order.getCartDao().getCart(UUID.randomUUID()));
+        mapper.writeValue(sw, order.getClientDetails());
         sw.close();
         logger.info(sw.toString());
     }
