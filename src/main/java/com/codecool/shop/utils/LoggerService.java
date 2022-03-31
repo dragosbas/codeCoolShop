@@ -14,7 +14,9 @@ public class LoggerService {
 
     private static LoggerService instance = null;
     private final Logger logger = Logger.getLogger("MyLog");
-    private final FileHandler fh = new FileHandler("C:/logs/shop.log");
+//    private final FileHandler fh = new FileHandler("C:/logs/shop.log");
+    private final FileHandler fh = new FileHandler("src/assets/orders.log");
+
     private final SimpleFormatter formatter = new SimpleFormatter();
 
     private LoggerService() throws IOException {
