@@ -18,7 +18,7 @@ import java.io.PrintWriter;
 import java.util.Map;
 
 
-@WebServlet(name = "productsServlet", urlPatterns = "/api/products/product", loadOnStartup = 2)
+@WebServlet(name = "productsServlet", urlPatterns = "/api/products/product", loadOnStartup = 7)
 public class ProductsJSON extends HttpServlet {
 
     @Override
@@ -50,9 +50,9 @@ public class ProductsJSON extends HttpServlet {
             User user = users.getUser(params.get("name"));
 
             if (user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN) {
-//                added = productService.addProductCategory(params.get("category"), params.get("department"), params.get("description"));
-                added = productService.addProduct(params.get("productname"), params.get("defaultprice"), params.get("defaultCurrency"), params.get("description"),params.get("productCategory"), params.get("supplier"), params.get("img"));
-//                added = productService.addProductCategory(params.get("category"), params.get("department"), params.get("description"));
+                added = productService.addProduct(params.get("productname"), params.get("defaultprice"),
+                        params.get("defaultCurrency"), params.get("description"),params.get("productCategory"),
+                        params.get("supplier"), params.get("img"));
             }
         }
 

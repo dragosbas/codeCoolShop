@@ -1,13 +1,13 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Role;
+import com.codecool.shop.model.User;
+import com.codecool.shop.serializations.ProductSerialization;
 import com.codecool.shop.service.ProductService;
+import com.codecool.shop.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Map;
 
 
 @WebServlet(name = "prodsBySupplierServlet", urlPatterns = "/api/products/supplier", loadOnStartup = 3)
@@ -58,5 +59,38 @@ public class ProductsSupplierJSON extends HttpServlet {
         sw.close();
 
         return sw.toString();
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        ProductSerialization ps = new ProductSerialization();
+        Map<String, String> params = ps.parseReqParams(req);
+
+        UserDao userDao = UserDaoMem.getInstance();
+        CartDao cartDao = CartDaoMem.getInstance();
+        UserService users = new UserService(userDao, cartDao);
+        ProductDao productDataStore = ProductDaoMem.getInstance();
+        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+        boolean added = false;
+
+        if(params.containsKey("name") && params.containsKey("password")){
+            User user= users.getUser(params.get("name"));
+
+            if(user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN){
+                added = productService.addSupplier(params.get("supplier"));
+            }
+        }
+
+        PrintWriter out = resp.getWriter();
+
+        if(added){
+            out.println(HttpServletResponse.SC_ACCEPTED);
+        }
+        else{
+            out.println(HttpServletResponse.SC_EXPECTATION_FAILED);
+        }
     }
 }

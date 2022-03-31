@@ -44,20 +44,18 @@ public class ProductService {
         return productDao.getAll();
     }
 
-    public boolean addSupplier(String name, String description) {
+    public boolean addSupplier(String name) {
         name = name.toLowerCase();
-        description = description.toLowerCase();
         boolean shouldAdd = true;
         var suppliers = supplierDao.getAll();
         for (Supplier value : suppliers) {
-            if (value.getName().equals(name) &&
-                    value.getDescription().equals(description)) {
+            if (value.getName().equals(name)) {
                 shouldAdd = false;
                 break;
             }
         }
         if (shouldAdd) {
-            Supplier supplier = new Supplier(name, description);
+            Supplier supplier = new Supplier(name);
             supplierDao.add(supplier);
         }
 
@@ -92,7 +90,7 @@ public class ProductService {
         String defaultCurrency = defaultcurrencyInput;
 
         //verific daca exista o categorie cu numele dat; daca nu atunci return false
-        ProductCategory productCategory =null;
+        ProductCategory productCategory = null;
         var categories = productCategoryDao.getAll();
         for (ProductCategory category : categories) if (category.getName().equals(productcategoryInput)) productCategory = category;
         if (productCategory==null) return false;

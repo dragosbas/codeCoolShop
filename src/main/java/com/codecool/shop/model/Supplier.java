@@ -9,7 +9,7 @@ public class Supplier extends BaseModel {
     @JsonIgnore
     private List<Product> products;
 
-    public Supplier(String name, String description) {
+    public Supplier(String name) {
         super(name);
         this.products = new ArrayList<>();
     }

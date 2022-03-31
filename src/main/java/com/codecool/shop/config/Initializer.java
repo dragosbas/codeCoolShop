@@ -29,9 +29,9 @@ public class Initializer implements ServletContextListener {
         UserDao userDaoStore= UserDaoMem.getInstance();
 
         //setting up a new supplier
-        Supplier amazon = new Supplier("Amazon", "Digital content and services");
+        Supplier amazon = new Supplier("Amazon");
         supplierDataStore.add(amazon);
-        Supplier lenovo = new Supplier("Lenovo", "Computers");
+        Supplier lenovo = new Supplier("Lenovo");
         supplierDataStore.add(lenovo);
 
         //setting up a new product category
