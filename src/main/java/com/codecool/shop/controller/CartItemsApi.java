@@ -29,7 +29,6 @@ public class CartItemsApi extends HttpServlet {
             buffer.append(line);
         }
 
-
         Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
         CartDao cartDao = CartDaoMem.getInstance();
         ProductDao productDataStore = ProductDaoMem.getInstance();
