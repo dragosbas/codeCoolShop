@@ -74,7 +74,8 @@ public class OrderControllerApi extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("Success","Yes");
-        engine.process("/product/checkout-form.html", context, resp.getWriter());
 
+
+        resp.sendRedirect(req.getContextPath() + "/success");
     }
 }
