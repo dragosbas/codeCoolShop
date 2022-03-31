@@ -20,6 +20,11 @@ public class ProductDaoMem implements ProductDao {
     private ProductDaoMem() {
     }
 
+    @Override
+    public Product find(String  productName) {
+        return data.stream().filter(t -> t.getName().equals(productName)).findFirst().orElse(null);
+    }
+
     public static ProductDaoMem getInstance() {
         if (instance == null) {
             instance = new ProductDaoMem();

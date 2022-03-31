@@ -3,14 +3,17 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementation.ProductDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Supplier;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
-public class ProductService{
+public class ProductService {
     private final ProductDao productDao;
     private final ProductCategoryDao productCategoryDao;
     private final SupplierDao supplierDao;
@@ -21,11 +24,11 @@ public class ProductService{
         this.supplierDao = supplierDao;
     }
 
-    public ProductCategory getProductCategory(int categoryId){
+    public ProductCategory getProductCategory(int categoryId) {
         return productCategoryDao.find(categoryId);
     }
 
-    public List<Product> getProductsForCategory(int categoryId){
+    public List<Product> getProductsForCategory(int categoryId) {
         var category = productCategoryDao.find(categoryId);
         return productDao.getBy(category);
     }
@@ -36,7 +39,7 @@ public class ProductService{
         return productDao.getBy(supplier);
     }
 
-    public boolean addSupplier(String name, String description){
+    public boolean addSupplier(String name, String description) {
         name = name.toLowerCase();
         description = description.toLowerCase();
         boolean shouldAdd = true;
@@ -56,7 +59,7 @@ public class ProductService{
         return shouldAdd;
     }
 
-    public boolean addProductCategory(String name, String department, String description){
+    public boolean addProductCategory(String name, String department, String description) {
         name = name.toLowerCase();
         department = department.toLowerCase();
         description = description.toLowerCase();
@@ -76,5 +79,30 @@ public class ProductService{
         }
 
         return shouldAdd;
+    }
+
+    public boolean addProduct(String productNameInput,String defaultpriceInput, String defaultcurrencyInput,String descriptionInput, String productcategoryInput, String supplierInput, String imgInput) {
+        BigDecimal defaultPrice=BigDecimal.valueOf(Integer.parseInt(defaultpriceInput));
+//        Currency defaultCurrency = Currency.getInstance(defaultcurrencyInput.toUpperCase());
+        String defaultCurrency = defaultcurrencyInput;
+
+        //verific daca exista o categorie cu numele dat; daca nu atunci return false
+        ProductCategory productCategory =null;
+        var categories = productCategoryDao.getAll();
+        for (ProductCategory category : categories) if (category.getName().equals(productcategoryInput)) productCategory = category;
+        if (productCategory==null) return false;
+        //verific daca exista o categorie cu numele dat; daca nu atunci return false
+        Supplier supplier=null;
+        var suppliers = supplierDao.getAll();
+        for (Supplier standardSupplier : suppliers) if (standardSupplier.getName().equals(supplierInput)) supplier = standardSupplier;
+        if (supplier==null) return false;
+        //
+
+        String img = imgInput;
+        String name = productNameInput;
+        String description = descriptionInput;
+        Product newProduct = new Product(name,defaultPrice,defaultCurrency,description,productCategory,supplier,img);
+        productDao.add(newProduct);
+        return true;
     }
 }
