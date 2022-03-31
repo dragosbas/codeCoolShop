@@ -1,7 +1,6 @@
 package com.codecool.shop.utils;
 import com.codecool.shop.model.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.IOException;
 import java.io.StringWriter;
