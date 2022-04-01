@@ -80,7 +80,7 @@ const onLoadCartItems = () => {
 onLoadCartItems();
 
 const sendProductId = (aLink) => {
-    let id = aLink.closest(".card-btn-add").dataset.id
+    let id = aLink.dataset.id;
     console.log(id);
     const itemId = {
         itemId: id

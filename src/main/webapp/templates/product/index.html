@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
-<head >
+<head>
     <div th:replace="header.html :: header"></div>
     <script type="module" src="/static/js/index.js" defer></script>
 </head>
@@ -34,9 +34,9 @@
     <div id="products" class="container index-items-container">
         <div th:each="prod,iterStat : ${products}">
             <div class="card">
-                <picture class="product-img-holder">
-                    <img class="product-img img-fluid my-auto" th:src="${prod.img}" alt="" />
-                </picture>
+                <div class="product-img-holder">
+                    <img class="product-img img-fluid my-auto" th:src="${prod.img}" alt=""/>
+                </div>
 
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
@@ -46,9 +46,7 @@
                     <div class="card-text card-price">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>
                     </div>
-                    <div class="card-btn-add" th:data-id="${prod.getId()}">
-                        <a class="btn btn-success add">Add to cart</a>
-                    </div>
+                    <a th:data-id="${prod.getId()}" class="btn btn-add add">Add to cart</a>
                 </div>
             </div>
         </div>
