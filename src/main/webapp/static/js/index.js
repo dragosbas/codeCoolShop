@@ -68,6 +68,7 @@ const changeCartNumber = () => {
     } else {
         localStorage.setItem("cartNumber", 1);
     }
+    console.log(cartItems.value);
     cartItems.innerHTML = localStorage.getItem("cartNumber");
 }
 
