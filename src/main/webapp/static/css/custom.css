@@ -27,7 +27,7 @@ html, body{
 
 
 .btn {
-    background: var(--primary-color);
+    background: #333333;
     border: 0;
     border-radius: .5rem;
     display: inline-block;
@@ -52,11 +52,28 @@ html, body{
 }
 
 .btn-add {
+    background: var(--primary-color);
     width: 100%;
     height: 2rem;
     padding: 0.2rem 0;
 }
 
+.btn-plus, .btn-minus {
+    background: var(--primary-color);
+    padding: 0.2rem 0.65rem;
+    border-radius: 50%;
+}
+
+
+.btn-minus {
+    padding: 0.2rem 0.85rem;
+    background: crimson;
+}
+
+.btn-info {
+    background: aqua;
+    padding: 0.8rem 1.7rem;
+}
 
 a {
     text-decoration: none;
@@ -238,8 +255,8 @@ form {
     display: inline;
 }
 
-.card .card-body .card-text::before {
-    content: "$";
+.card-price::before {
+    content: "$ ";
     display: inline;
 }
 
@@ -255,9 +272,9 @@ form {
     background: #f4f4f4;
 }
 
-#products {
-    margin-top: 1.5rem;
-}
+/*#products {*/
+/*    margin-top: 1.5rem;*/
+/*}*/
 
 
 /*.card .product-img-holder  .product-img {*/
@@ -277,18 +294,20 @@ form {
     display: grid;
     grid-template-columns: 3fr 1fr;
     min-height: 75vh;
+    gap: 1rem;
 }
 
 
-
-.items-container > div {
+.cart-items-container > div {
     max-width: 20rem;
 }
 
-.items-container {
+.cart-items-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 2rem;
+    gap: 1.5rem;
+    background: rgba(0, 0, 0, .03);
+    padding: 1rem 1.5rem;
 }
 
 .price {
@@ -301,26 +320,21 @@ form {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.price h1{
-    font-size: 2rem !important;
-    margin: 0px 1rem;
+
+.price ul {
+    max-height: 70%;
 }
 
 .price h1 {
+    font-size: 2rem !important;
     text-align: center;
     display: block;
     margin: 0 auto;
 }
 
 
-.price div:last-child {
-    margin: 1.5rem 1rem 0px;
-}
 
-/*.price .btn {*/
-/*    width: 100%;*/
-/*    justify-self: center;*/
-/*}*/
+
 
 /*Items edit quantity buttons*/
 

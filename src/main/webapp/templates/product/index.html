@@ -35,13 +35,14 @@
         <div th:each="prod,iterStat : ${products}">
             <div class="card">
                 <div class="product-img-holder">
-                    <img class="product-img img-fluid my-auto" th:src="${prod.img}" alt=""/>
+                    <img class="product-img" th:src="${prod.img}" alt=""/>
                 </div>
 
                 <div class="card-header">
                     <h4 class="card-title" th:text="${prod.name}">Product name</h4>
                     <p class="card-text card-description" th:text="${prod.description}">Product description... </p>
                 </div>
+
                 <div class="card-body">
                     <div class="card-text card-price">
                         <p class="lead" th:text="${prod.getPrice()}">100 USD</p>

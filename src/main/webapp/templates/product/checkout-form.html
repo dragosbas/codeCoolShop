@@ -35,7 +35,7 @@
                 <label for="address">Address</label>
                 <textarea required name="address" id="address"></textarea>
             </div>
-            <button class="btn btn-success mb-2" type="submit">Go To Payment</button>
+            <button class="btn btn-add" type="submit">Go To Payment</button>
             <p>
                 By clicking the button  you agree to our
                 <a href="#">Terms</a> and
@@ -46,7 +46,7 @@
     <div class="price">
         <div>
             <h1>Total Price</h1>
-            <h1 id="number" th:text="${totalPrice}"> </h1>
+            <h1 id="number" class="card-price" th:text="${totalPrice}"> </h1>
         </div>
         <ul class="products-list">
             <li th:each="product : ${cart.keySet()}" th:data-id="${product.id}">

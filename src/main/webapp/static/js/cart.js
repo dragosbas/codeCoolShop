@@ -1,5 +1,5 @@
-const addProductsButtons = document.querySelectorAll(".card-btn-add");
-const removeProductsButtons = document.querySelectorAll(".card-btn-remove");
+const addProductsButtons = document.querySelectorAll(".btn-plus");
+const removeProductsButtons = document.querySelectorAll(".btn-minus");
 
 
 addProductsButtons.forEach(btn => {
@@ -22,9 +22,10 @@ function updatePrice(id, number) {
 }
 
 function addToCart(event) {
-    let id = event.target.closest(".card-btn-add").dataset.id
-    let textValue = parseInt(event.target.closest(".card-btn-add").previousElementSibling.innerText) + 1
-    event.target.closest(".card-btn-add").previousElementSibling.innerText = textValue;
+    let id = event.target.dataset.id
+    console.log(id)
+    let textValue = parseInt(event.target.closest(".btn-plus").previousElementSibling.innerText) + 1
+    event.target.closest(".btn-plus").previousElementSibling.innerText = textValue;
     document.getElementById(`qty-${id}`).innerText = textValue;
     updatePrice(id, 1)
     changeCartNumberPlus()
@@ -32,9 +33,9 @@ function addToCart(event) {
 }
 
 function removeFromCart(event) {
-    let id = event.target.closest(".card-btn-remove").dataset.id
-    let textValue = parseInt(event.target.closest(".card-btn-remove").nextElementSibling.innerText) - 1
-    event.target.closest(".card-btn-remove").nextElementSibling.innerText = textValue;
+    let id = event.target.dataset.id
+    let textValue = parseInt(event.target.closest(".btn-minus").nextElementSibling.innerText) - 1
+    event.target.closest(".btn-minus").nextElementSibling.innerText = textValue;
     document.getElementById(`qty-${id}`).innerText = textValue;
     updatePrice(id, -1)
 
