@@ -39,7 +39,6 @@ public class UserDaoMem implements UserDao {
 
     @Override
     public void removeUser(UUID id) {
-
     }
 
     @Override
@@ -54,7 +53,7 @@ public class UserDaoMem implements UserDao {
 
     @Override
     public User getUserById(UUID id) {
-        return null;
+        return users.stream().filter(user -> user.getId() == id).findFirst().get();
     }
 
     @Override
