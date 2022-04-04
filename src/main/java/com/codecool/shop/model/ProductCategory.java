@@ -1,10 +1,14 @@
 package com.codecool.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductCategory extends BaseModel {
     private String department;
+
+    @JsonIgnore
     private List<Product> products;
 
     public ProductCategory(String name, String department, String description) {

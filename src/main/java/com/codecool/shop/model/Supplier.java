@@ -1,12 +1,15 @@
 package com.codecool.shop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Supplier extends BaseModel {
+    @JsonIgnore
     private List<Product> products;
 
-    public Supplier(String name, String description) {
+    public Supplier(String name) {
         super(name);
         this.products = new ArrayList<>();
     }
