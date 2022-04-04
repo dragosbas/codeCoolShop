@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head >
+    <div th:replace="header.html :: header"></div>
+    <script type="module" src="/static/js/cart.js" defer></script>
+</head>
+
+<body>
+
+
+<nav th:replace="header.html :: navigation"></nav>
+
+<div class="container cart-container">
+    <div id="products" class="cart-items-container">
+        <div class="card" th:each="prod: ${cart.keySet()}">
+            <div class="product-img-holder">
+                <img class="product-img" th:src="${prod.img}" alt="" />
+            </div>
+
+            <div class="card-header">
+                <h4 class="card-title" th:text="${prod.name}">Product name</h4>
+                <p class="card-text" th:text="${prod.description}">Product description... </p>
+            </div>
+
+            <div class="card-body">
+                <div class="card-text card-price">
+                    <p class="lead" th:text="${prod.getPrice()}" th:id="'price-' + ${prod.id}">100 USD</p>
+                </div>
+                <div class="card-text items-edit">
+                    <a th:data-id="${prod.id}" class="btn btn-minus">-</a>
+                    <p th:text="${cart.get(prod)}" th:id="'quantity-' + ${prod.id}">1</p>
+                    <a th:data-id="${prod.id}" class="btn btn-plus">+</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="price">
+        <div>
+            <h1>Total Price</h1>
+            <h1 th:text="${totalPrice}" class="card-price" id="total-price"></h1>
+        </div>
+        <ul class="products-list">
+            <li th:each="product : ${cart.keySet()}" th:data-id="${product.id}">
+                <span th:text = "${product.name}"
+                >Name</span>
+                <span th:id="'qty-' + ${product.id}" th:text="${cart.get(product)}">Quantity</span>
+            </li>
+        </ul>
+        <a href="/checkout" class="btn btn-add">Continue</a>
+
+
+    </div>
+
+</div>
+</body>
+
+<div th:replace="footer.html :: copy"></div>
+
+</html>
