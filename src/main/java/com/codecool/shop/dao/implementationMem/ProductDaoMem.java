@@ -42,27 +42,41 @@ public class ProductDaoMem implements ProductDao {
     }
 
 
-    public boolean isProductMissing(SupplierDao supplierDao, ProductCategoryDao productCategoryDao, String productNameInput, String defaultpriceInput, String defaultcurrencyInput, String descriptionInput, String productcategoryInput, String supplierInput, String imgInput) {
+    public boolean isProductMissing(SupplierDao supplierDao, ProductCategoryDao productCategoryDao,
+                                    String name, String defaultpriceInput, String defaultCurrency,
+                                    String description, String productcategoryInput, String supplierInput,
+                                    String img) {
         BigDecimal defaultPrice=BigDecimal.valueOf(Integer.parseInt(defaultpriceInput));
 //        Currency defaultCurrency = Currency.getInstance(defaultcurrencyInput.toUpperCase());
-        String defaultCurrency = defaultcurrencyInput;
 
         //verific daca exista o categorie cu numele dat; daca nu atunci return false
         ProductCategory productCategory = null;
         var categories = productCategoryDao.getAll();
-        for (ProductCategory category : categories) if (category.getName().equals(productcategoryInput)) productCategory = category;
-        if (productCategory==null) return false;
+        for (ProductCategory category : categories){
+            if (category.getName().equalsIgnoreCase(productcategoryInput)) {
+                productCategory = category;
+                break;
+            }
+        }
+        if (productCategory==null) {
+            return false;
+        }
         //verific daca exista o categorie cu numele dat; daca nu atunci return false
         Supplier supplier=null;
         var suppliers = supplierDao.getAll();
-        for (Supplier standardSupplier : suppliers) if (standardSupplier.getName().equals(supplierInput)) supplier = standardSupplier;
-        if (supplier==null) return false;
+        for (Supplier standardSupplier : suppliers) {
+            if (standardSupplier.getName().equalsIgnoreCase(supplierInput)) {
+                supplier = standardSupplier;
+                break;
+            }
+        }
+
+        if (supplier==null) {
+            return false;
+        }
         //
 
-        String img = imgInput;
-        String name = productNameInput;
-        String description = descriptionInput;
-        Product newProduct = new Product(name,defaultPrice,defaultCurrency,description,productCategory,supplier,img);
+        Product newProduct = new Product(name, defaultPrice, defaultCurrency, description, productCategory, supplier, img);
         add(newProduct);
         return true;
     }
