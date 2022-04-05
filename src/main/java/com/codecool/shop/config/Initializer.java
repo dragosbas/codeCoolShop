@@ -12,6 +12,7 @@ import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.Supplier;
+import com.codecool.shop.service.ApplicationService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -28,6 +29,9 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         UserDao userDaoStore= UserDaoMem.getInstance();
 
+
+        ApplicationService applicationService = ApplicationService.getInstance();
+        applicationService.setApplicationService();
 
 
         //setting up a new supplier

@@ -1,12 +1,8 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductCategoryDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
-import com.codecool.shop.factories.ApplicationServiceFactory;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.service.OrderService;
@@ -32,14 +28,13 @@ public class OrderControllerApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
-        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+        ApplicationService applicationService = ApplicationService.getInstance();
 
 //        ProductDao productDao = applicationService.getProductDao();
 //        ProductCategoryDao productCategoryDataStore = applicationService.getProductCategoryDao();
 //        SupplierDao supplierDao = applicationService.getSupplierDao();
 //        ProductService productService = applicationService.getProductService();
-        OrderService orderService = applicationService.getOrderService();
+            OrderDao orderDao = applicationService.getOrderDao();
 
 
         if (req.getParameter("first-name") != null) {
@@ -57,7 +52,7 @@ public class OrderControllerApi extends HttpServlet {
             clientDetails.put("Phone", req.getParameter("phone"));
             clientDetails.put("Address", req.getParameter("address"));
 
-            Order order = orderService.addOrder(clientDetails, cart);
+            Order order = orderDao.createOrder(clientDetails, cart);
 
 
             try{
@@ -76,17 +71,22 @@ public class OrderControllerApi extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
-        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+//        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
+//        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+//
+//        OrderService orderService = applicationService.getOrderService();
 
-        OrderService orderService = applicationService.getOrderService();
+        ApplicationService applicationService = ApplicationService.getInstance();
+
+        OrderDao orderDao = applicationService.getOrderDao();
 
         HttpSession session=req.getSession();
         UUID orderId = (UUID) session.getAttribute("order-id");
         LoggerService l = LoggerService.getInstance();
 
 
-        Order currentOrder = orderService.getOrder(orderId);
+//        Order currentOrder = orderService.getOrder(orderId);
+            Order currentOrder = orderDao.getOrder(orderId);
 
         //TODO add to DB, next sprint
         l.log(currentOrder);

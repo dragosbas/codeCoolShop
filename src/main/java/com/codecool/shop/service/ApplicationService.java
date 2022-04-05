@@ -1,32 +1,95 @@
 package com.codecool.shop.service;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
+import com.codecool.shop.dao.implementationMem.*;
 
-public abstract class ApplicationService {
-        OrderService orderService;
-        ProductService productService;
-        UserService userService;
+public  class ApplicationService {
+    private static ApplicationService instance = null;
 
-//        boolean databaseActive;
+    CartDao cartDao;
+    OrderDao orderDao;
+    ProductDao productDao;
+    ProductCategoryDao productCategoryDao;
+    SupplierDao supplierDao;
+    UserDao userDao;
 
-    protected ApplicationService(OrderService orderService, ProductService productService, UserService userService) {
-        this.orderService = orderService;
-        this.productService = productService;
-        this.userService = userService;
+    private boolean isDatabaseOn = false;
+
+    private ApplicationService() {
+
     }
 
-    public abstract SupplierDao getSupplierDao();
+    public static ApplicationService getInstance() {
+        if (instance == null) {
+            instance = new ApplicationService();
+        }
+        return instance;
+    }
 
-    public abstract ProductCategoryDao getProductCategoryDao();
+    public boolean isDatabaseOn() {
+        return isDatabaseOn;
+    }
 
-    public abstract ProductDao getProductDao();
+    public void setDatabaseOn(boolean databaseOn) {
+        isDatabaseOn = databaseOn;
+    }
 
-    public abstract CartDao getCartDao();
+    public void setApplicationService() {
 
-    public abstract ProductService getProductService();
+        if (isDatabaseOn) {
+            //todo CategoryDaoJdbc si restul ca singletone
+            //todo DatabaseManager
 
-    public abstract OrderService getOrderService();
+            cartDao = CartDaoMem.getInstance();
+            orderDao = OrderDaoMem.getInstance();
+            productCategoryDao = ProductCategoryDaoMem.getInstance();
+            productDao = ProductDaoMem.getInstance();
+            supplierDao = SupplierDaoMem.getInstance();
+            userDao = UserDaoMem.getInstance();
 
-    public abstract UserService getUserService();
+//            ((CartDaoJdbc)cartDao).setConnection();
+        } else {
 
+            cartDao = CartDaoMem.getInstance();
+            orderDao = OrderDaoMem.getInstance();
+            productCategoryDao = ProductCategoryDaoMem.getInstance();
+            productDao = ProductDaoMem.getInstance();
+            supplierDao = SupplierDaoMem.getInstance();
+            userDao = UserDaoMem.getInstance();
+
+
+//            OrderService orderService = new OrderService(orderDao, cartDao);
+//            ProductService productService = new ProductService(productDao, productCategoryDao, supplierDao);
+//            UserService userService = new UserService(userDao, cartDao);
+
+//            return new InMemAppService(orderService, productService, userService);
+            // plus setConnection pentru fiecare jdbc
+        }
+
+    }
+
+    public CartDao getCartDao() {
+        return cartDao;
+    }
+
+    public OrderDao getOrderDao() {
+        return orderDao;
+    }
+
+    public ProductDao getProductDao() {
+        return productDao;
+    }
+
+    public ProductCategoryDao getProductCategoryDao() {
+        return productCategoryDao;
+    }
+
+    public SupplierDao getSupplierDao() {
+        return supplierDao;
+    }
+
+    public UserDao getUserDao() {
+        return userDao;
+    }
 }

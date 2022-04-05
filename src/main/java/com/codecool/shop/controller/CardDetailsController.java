@@ -3,7 +3,6 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
-import com.codecool.shop.factories.ApplicationServiceFactory;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.service.OrderService;
 import org.thymeleaf.TemplateEngine;
@@ -25,8 +24,8 @@ public class CardDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
-        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+        ApplicationService applicationService = ApplicationService.getInstance();
+
 //        OrderService orderService = applicationService.getOrderService();
 
         CartDao cart = applicationService.getCartDao();
