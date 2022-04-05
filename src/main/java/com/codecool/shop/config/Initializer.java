@@ -13,6 +13,7 @@ import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.Supplier;
 import com.codecool.shop.service.ApplicationService;
+import com.codecool.shop.utils.Persistence;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -29,8 +30,12 @@ public class Initializer implements ServletContextListener {
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         UserDao userDaoStore= UserDaoMem.getInstance();
 
-
+        // SA NU UITAM!
+        // 1 Iei instanceul
+        // 2 Setezi persistenta
+        // 3 Initializezi Dao-urile in funcite de persistena setata la 2!
         ApplicationService applicationService = ApplicationService.getInstance();
+        applicationService.setPersistence(Persistence.MEMORY);
         applicationService.setApplicationService();
 
 

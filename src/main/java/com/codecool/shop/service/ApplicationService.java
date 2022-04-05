@@ -3,6 +3,7 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
 import com.codecool.shop.dao.implementationMem.*;
+import com.codecool.shop.utils.Persistence;
 
 public  class ApplicationService {
     private static ApplicationService instance = null;
@@ -14,7 +15,7 @@ public  class ApplicationService {
     SupplierDao supplierDao;
     UserDao userDao;
 
-    private boolean isDatabaseOn = false;
+    private Persistence persistence;
 
     private ApplicationService() {
 
@@ -27,29 +28,29 @@ public  class ApplicationService {
         return instance;
     }
 
-    public boolean isDatabaseOn() {
-        return isDatabaseOn;
+    public Persistence getPersistence() {
+        return persistence;
     }
 
-    public void setDatabaseOn(boolean databaseOn) {
-        isDatabaseOn = databaseOn;
+    public void setPersistence(Persistence persistence) {
+        this.persistence = persistence;
     }
 
     public void setApplicationService() {
 
-        if (isDatabaseOn) {
+        if (persistence == Persistence.JDBC) {
             //todo CategoryDaoJdbc si restul ca singletone
             //todo DatabaseManager
 
-            cartDao = CartDaoMem.getInstance();
-            orderDao = OrderDaoMem.getInstance();
-            productCategoryDao = ProductCategoryDaoMem.getInstance();
-            productDao = ProductDaoMem.getInstance();
-            supplierDao = SupplierDaoMem.getInstance();
-            userDao = UserDaoMem.getInstance();
+//            cartDao = CartDaoMem.getInstance();
+//            orderDao = OrderDaoMem.getInstance();
+//            productCategoryDao = ProductCategoryDaoMem.getInstance();
+//            productDao = ProductDaoMem.getInstance();
+//            supplierDao = SupplierDaoMem.getInstance();
+//            userDao = UserDaoMem.getInstance();
 
 //            ((CartDaoJdbc)cartDao).setConnection();
-        } else {
+        } else if (persistence == Persistence.MEMORY) {
 
             cartDao = CartDaoMem.getInstance();
             orderDao = OrderDaoMem.getInstance();
