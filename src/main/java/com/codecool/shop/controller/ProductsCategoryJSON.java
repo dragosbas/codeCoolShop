@@ -1,7 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
+import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
@@ -15,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;

@@ -2,7 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Product;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 @WebServlet(urlPatterns = {"/cart"})
 public class CartController extends HttpServlet {

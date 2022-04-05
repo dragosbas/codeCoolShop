@@ -4,10 +4,10 @@ import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.dao.UserDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
-import com.codecool.shop.dao.implementation.UserDaoMem;
+import com.codecool.shop.dao.implementationMem.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementationMem.ProductDaoMem;
+import com.codecool.shop.dao.implementationMem.SupplierDaoMem;
+import com.codecool.shop.dao.implementationMem.UserDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Role;
@@ -27,6 +27,8 @@ public class Initializer implements ServletContextListener {
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDataStore = SupplierDaoMem.getInstance();
         UserDao userDaoStore= UserDaoMem.getInstance();
+
+
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon");

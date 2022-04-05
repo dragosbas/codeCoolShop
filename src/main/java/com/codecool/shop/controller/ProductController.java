@@ -3,9 +3,12 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.SupplierDao;
-import com.codecool.shop.dao.implementation.ProductCategoryDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.dao.implementation.SupplierDaoMem;
+import com.codecool.shop.dao.implementationMem.ProductCategoryDaoMem;
+import com.codecool.shop.dao.implementationMem.ProductDaoMem;
+import com.codecool.shop.dao.implementationMem.SupplierDaoMem;
+import com.codecool.shop.factories.ApplicationServiceFactory;
+import com.codecool.shop.service.ApplicationService;
+import com.codecool.shop.service.OrderService;
 import com.codecool.shop.service.ProductService;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
@@ -17,18 +20,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
+        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+
+        ProductDao productDao   = applicationService.getProductDao();
+        ProductCategoryDao  productCategoryDataStore = applicationService.getProductCategoryDao();
+        SupplierDao supplierDao = applicationService.getSupplierDao();
+        ProductService productService = applicationService.getProductService();
+        OrderService orderService = applicationService.getOrderService();
+
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

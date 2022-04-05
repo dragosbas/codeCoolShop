@@ -2,9 +2,15 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.dao.ProductCategoryDao;
+import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.SupplierDao;
+import com.codecool.shop.dao.implementationMem.CartDaoMem;
+import com.codecool.shop.factories.ApplicationServiceFactory;
 import com.codecool.shop.model.Order;
+import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.service.OrderService;
+import com.codecool.shop.service.ProductService;
 import com.codecool.shop.utils.LoggerService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -26,10 +32,20 @@ public class OrderControllerApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
+        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+
+//        ProductDao productDao = applicationService.getProductDao();
+//        ProductCategoryDao productCategoryDataStore = applicationService.getProductCategoryDao();
+//        SupplierDao supplierDao = applicationService.getSupplierDao();
+//        ProductService productService = applicationService.getProductService();
+        OrderService orderService = applicationService.getOrderService();
+
+
         if (req.getParameter("first-name") != null) {
 
             CartDao cart= CartDaoMem.getInstance();
-            OrderService orderService = new OrderService();
+//            OrderService orderService = new OrderService();
 
             Map<String, String> clientDetails = new HashMap<>();
             CartDao clientCart = cart;
@@ -60,11 +76,15 @@ public class OrderControllerApi extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
+        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
+
+        OrderService orderService = applicationService.getOrderService();
+
         HttpSession session=req.getSession();
         UUID orderId = (UUID) session.getAttribute("order-id");
         LoggerService l = LoggerService.getInstance();
 
-        OrderService orderService = new OrderService();
 
         Order currentOrder = orderService.getOrder(orderId);
 
