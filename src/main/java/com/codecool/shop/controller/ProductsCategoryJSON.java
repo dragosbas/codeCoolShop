@@ -3,11 +3,11 @@ package com.codecool.shop.controller;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.serializations.ProductSerialization;
-import com.codecool.shop.service.ProductService;
-import com.codecool.shop.service.UserService;
+import com.codecool.shop.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -25,6 +25,8 @@ import java.util.Map;
 public class ProductsCategoryJSON extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        ApplicationService applicationService = ApplicationService.getInstance();
+
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
@@ -45,9 +47,12 @@ public class ProductsCategoryJSON extends HttpServlet {
         ProductDao productDataStore = ProductDaoMem.getInstance();
         ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
         SupplierDao supplierDao= SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
 
-        String products = writeListToJsonArray(productService.getProductsForCategory(id));
+        var category =  applicationService.getProductCategoryDao().find(id);
+        var productList = applicationService.getProductDao().getBy(category);
+
+        String products = writeListToJsonArray(productList);
         PrintWriter out = response.getWriter();
         out.println(products);
     }
@@ -63,25 +68,40 @@ public class ProductsCategoryJSON extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
 
-        UserDao userDao = UserDaoMem.getInstance();
-        CartDao cartDao = CartDaoMem.getInstance();
-        UserService users = new UserService(userDao, cartDao);
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+        ApplicationService applicationService = ApplicationService.getInstance();
+
+
+
+        ProductCategoryDao productCategoryDao =  applicationService.getProductCategoryDao();
+
+
+//        UserDao userDao = UserDaoMem.getInstance();
+//        CartDao cartDao = CartDaoMem.getInstance();
+//        UserService users = new UserService(userDao, cartDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
         boolean added = false;
 
         System.out.println(params);
 
         if(params.containsKey("name") && params.containsKey("password")){
-            User user= users.getUser(params.get("name"));
+
+            User user = applicationService.getUserDao().getUserByName(params.get("name"));
+
+//            User user= users.getUser(params.get("name"));
 
             if(user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN){
-                added = productService.addProductCategory(params.get("category"), params.get("department"), params.get("description"));
+//                if (productCategoryDao.contains(params.get("category"))) productCategoryDao.update(params.get("category"), params.get("department"), params.get("description"));
+//                else productCategoryDao.add();
+
+//                out.println(HttpServletResponse.SC_ACCEPTED);
+                added = productCategoryDao.isCategoryMissing(params.get("category"), params.get("department"), params.get("description"));
             }
         }
 

@@ -29,6 +29,25 @@ public class SupplierDaoMem implements SupplierDao {
         data.add(supplier);
     }
 
+
+    public boolean isSupplierMissing(String name) {
+        name = name.toLowerCase();
+        boolean shouldAdd = true;
+        for (Supplier value : data) {
+            if (value.getName().equals(name)) {
+                shouldAdd = false;
+                break;
+            }
+        }
+        if (shouldAdd) {
+            Supplier supplier = new Supplier(name);
+            add(supplier);
+        }
+
+        return shouldAdd;
+    }
+
+
     @Override
     public Supplier find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);

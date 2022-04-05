@@ -2,9 +2,7 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.service.ApplicationService;
-import com.codecool.shop.service.OrderService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 

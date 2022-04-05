@@ -31,6 +31,30 @@ public class ProductCategoryDaoMem implements ProductCategoryDao {
     }
 
     @Override
+    public boolean isCategoryMissing(String name, String department, String description) {
+        name = name.toLowerCase();
+        department = department.toLowerCase();
+        description = description.toLowerCase();
+        boolean shouldAdd = true;
+        for (ProductCategory productCategory : data) {
+            if (productCategory.getName().equals(name) &&
+                    productCategory.getDescription().equals(description) &&
+                    productCategory.getDepartment().equals(department)) {
+                shouldAdd = false;
+                break;
+            }
+        }
+        if (shouldAdd) {
+            ProductCategory category = new ProductCategory(name.substring(0, 1).toUpperCase() + name.substring(1), department, description);
+            this.add(category);
+        }
+
+        return shouldAdd;
+    }
+
+
+
+    @Override
     public ProductCategory find(int id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
