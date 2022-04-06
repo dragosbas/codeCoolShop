@@ -11,7 +11,7 @@ public interface CartDao {
     
     public void addToCart(Product product);
     public void removeFromCart(Product product);
-    public Map<Product, Integer> getCart(UUID id);
+    public Map<Product, Integer> getCart(UUID userId);
     void emptyCart();
 
 }

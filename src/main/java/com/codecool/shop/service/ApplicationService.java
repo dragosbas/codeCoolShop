@@ -59,6 +59,11 @@ public  class ApplicationService {
 //            productDao = ProductDaoJdbc.getInstance();
 //            supplierDao = SupplierDaoJdbc.getInstance();
 //            userDao = UserDaoJdbc.getInstance();
+            orderDao = OrderDaoMem.getInstance();
+            productCategoryDao = ProductCategoryDaoMem.getInstance();
+            productDao = ProductDaoMem.getInstance();
+            supplierDao = SupplierDaoMem.getInstance();
+            userDao = UserDaoMem.getInstance();
 
             establishConnection();
 

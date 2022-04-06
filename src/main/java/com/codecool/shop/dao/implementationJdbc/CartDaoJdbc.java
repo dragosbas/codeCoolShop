@@ -1,12 +1,12 @@
 package com.codecool.shop.dao.implementationJdbc;
 
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.model.Cart;
-import com.codecool.shop.model.Product;
-import com.codecool.shop.model.User;
+import com.codecool.shop.model.*;
+import jdk.jfr.Category;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -128,8 +128,44 @@ public class CartDaoJdbc implements CartDao {
     }
 
     @Override
-    public Map<Product, Integer> getCart(UUID id) {
-        return null;
+    public Map<Product, Integer> getCart(UUID userId) {
+        // aka getAll
+        try(Connection conn = dataSource.getConnection()){
+//            String sql = "SELECT cart_items.quantity, products.name, products.description, products.price, suppliers.name, suppliers.description, category.name, category.description FROM cart WHERE ownerid = ?";
+            String sql = "SELECT\n" +
+                    "       ci.quantity products_quantity,\n" +
+                    "       p.name product_name,\n" +
+                    "       p.description product_description,\n" +
+                    "       p.price product_price,\n" +
+                    "       s.name supplier_name,\n" +
+                    "       s.description supplier_description,\n" +
+                    "       c.name category_name,\n" +
+                    "       c.description category_nescription\n" +
+                    "\n" +
+                    "FROM cart\n" +
+                    "INNER JOIN cart_items ci on cart.id = ci.cart_id\n" +
+                    "INNER JOIN products p on ci.product_id = p.id\n" +
+                    "INNER JOIN categories c on c.id = p.category_id\n" +
+                    "INNER JOIN suppliers s on s.id = p.supplier_id\n" +
+                    "WHERE cart.ownerid = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setObject(1, userId);
+            ResultSet rs = st.executeQuery();
+
+            Map<Product, Integer> result = new HashMap<>();
+            while (rs.next()) {
+                ProductCategory category = new ProductCategory(rs.getString(7), "Tech", rs.getString(8));
+                Supplier supplier = new Supplier(rs.getString(5));
+                Product product = new Product(rs.getString(2), rs.getBigDecimal(4), "USD", rs.getString(3), category, supplier, "https://storage.googleapis.com/flip-global/device-images/apple_iphone-6s_space-grey_sell_mip@_1000.jpg");
+                result.put(product, rs.getInt(1));
+            }
+            return result;
+
+
+        }catch (SQLException e ){
+            throw new RuntimeException();
+        }
+
     }
 
     @Override

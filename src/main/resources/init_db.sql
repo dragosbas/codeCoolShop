@@ -56,3 +56,93 @@ Create TABLE Client_order (
     Last_name VARCHAR(50),
     Email VARCHAR(50)
 );
+
+
+SELECT
+    ci.quantity products_quantity,
+    p.name product_name,
+    p.description product_description,
+    p.price product_price,
+    s.name supplier_name,
+    s.description supplier_description,
+    c.name category_name,
+    c.description category_nescription
+
+FROM cart
+         INNER JOIN cart_items ci on cart.id = ci.cart_id
+         INNER JOIN products p on ci.product_id = p.id
+         INNER JOIN categories c on c.id = p.category_id
+         INNER JOIN suppliers s on s.id = p.supplier_id
+WHERE cart.ownerid = 'b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15';
+
+
+
+-- ownerid = 1
+
+INSERT INTO users (id, user_name, password, role) VALUES (
+                                                             'b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                                             'ADMIN',
+                                                             'ADMIN',
+                                                             'ADMIN'
+                                                         );
+
+INSERT INTO cart (id, ownerid) VALUES (
+                                          'b0eebc92-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                          'b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15'
+                                      );
+
+
+
+INSERT INTO suppliers VALUES (
+                                 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+                                 'Samsung',
+                                 'Nice brand'
+                             );
+
+INSERT INTO suppliers VALUES (
+                                 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
+                                 'Apple',
+                                 'Bad brand'
+                             );
+
+
+
+INSERT INTO categories VALUES (
+                                  'b0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                  'Tablet',
+                                  'A bigger phone'
+                              );
+
+
+INSERT INTO categories VALUES (
+                                  'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                  'Phone',
+                                  'A smaller tablet'
+                              );
+
+
+INSERT INTO products VALUES (
+                                'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a32',
+                                'Galaxy 5000',
+                                'A phone',
+                                3000,
+                                'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
+                                'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15'
+                            );
+
+
+INSERT INTO products VALUES (
+                                'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a77',
+                                'iPhone 50',
+                                'A iPhone',
+                                3000,
+                                'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
+                                'c0eebc99-9c0b-4ef8-bb6d-6bb9bd380a15'
+                            );
+
+INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (
+                                                                  'b0eebc92-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                                                  'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a77',
+                                                                  10
+                                                              );
+
