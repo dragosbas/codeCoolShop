@@ -41,7 +41,7 @@ CREATE TABLE Cart (
     OwnerId uuid REFERENCES Users (Id)
 );
 
-CREATE TABLE Order_Item (
+CREATE TABLE Cart_Items (
     Cart_id uuid REFERENCES Cart (Id),
     Product_id uuid REFERENCES Products (Id),
     Quantity int
