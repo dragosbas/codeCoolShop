@@ -1,12 +1,14 @@
 package com.codecool.shop.manager;
 
 import com.codecool.shop.dao.*;
+import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
+import com.codecool.shop.dao.implementationJdbc.SupplierDaoJdbc;
 import org.postgresql.ds.PGSimpleDataSource;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-public class ShopDatabaseManager {
+public class ShopDatabaseManager{
     UserDao userDao;
     ProductDao productDao;
     SupplierDao supplierDao;
@@ -14,9 +16,11 @@ public class ShopDatabaseManager {
     OrderDao orderDao;
     CartDao cartDao;
 
-    private void setup() throws SQLException {
+    public void setup(CartDaoJdbc cardDao, SupplierDaoJdbc supplierDao) throws SQLException {
         DataSource dataSource = connect();
         //TODO userDao = new userDaoJdbc  etc...
+        cardDao.establishConnection(dataSource);
+        supplierDao.establishConnection(dataSource);
     }
      
 

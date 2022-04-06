@@ -8,7 +8,7 @@ public class DatabaseManager {
 
     public static boolean isInMemory(){
         if(instance == null){
-            instance = true;
+            instance = false;
         }
         return instance;
     }

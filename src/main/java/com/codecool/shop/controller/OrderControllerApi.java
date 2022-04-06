@@ -81,7 +81,6 @@ public class OrderControllerApi extends HttpServlet {
         HttpSession session=req.getSession();
         UUID orderId = null;
         try{
-            System.out.println(session.getAttribute("order-id"));
             orderId = UUID.fromString(session.getAttribute("order-id").toString());
         }
         catch (Exception e){
