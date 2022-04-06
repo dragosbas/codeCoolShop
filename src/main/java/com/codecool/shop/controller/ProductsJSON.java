@@ -1,12 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.serializations.ProductSerialization;
-import com.codecool.shop.service.ProductService;
-import com.codecool.shop.service.UserService;
+import com.codecool.shop.service.ApplicationService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,23 +32,34 @@ public class ProductsJSON extends HttpServlet {
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
 
-        UserDao userDao = UserDaoMem.getInstance();
-        CartDao cartDao = CartDaoMem.getInstance();
-        UserService users = new UserService(userDao, cartDao);
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao = SupplierDaoMem.getInstance();
+//        UserDao userDao = UserDaoMem.getInstance();
+//        CartDao cartDao = CartDaoMem.getInstance();
+//        UserService users = new UserService(userDao, cartDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao = SupplierDaoMem.getInstance();
 
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+
+
+        ApplicationService applicationService = ApplicationService.getInstance();
+
+        ProductDao productDao =  applicationService.getProductDao();
+        SupplierDao supplierDao = applicationService.getSupplierDao();
+        ProductCategoryDao productCategoryDao = applicationService.getProductCategoryDao();
+
+
         boolean added = false;
 
         System.out.println(params);
 
         if (params.containsKey("name") && params.containsKey("password")) {
-            User user = users.getUser(params.get("name"));
+            User user = applicationService.getUserDao().getUserByName(params.get("name"));
 
             if (user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN) {
-                added = productService.addProduct(params.get("productname"), params.get("defaultprice"),
+//                if (supplierDao)
+                //todo check if contains
+                added = productDao.isProductMissing(supplierDao, productCategoryDao, params.get("productname"), params.get("defaultprice"),
                         params.get("defaultCurrency"), params.get("description"),params.get("productCategory"),
                         params.get("supplier"), params.get("img"));
             }

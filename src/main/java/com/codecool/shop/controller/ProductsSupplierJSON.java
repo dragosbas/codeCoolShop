@@ -1,13 +1,13 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementation.*;
+import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Role;
+import com.codecool.shop.model.Supplier;
 import com.codecool.shop.model.User;
 import com.codecool.shop.serializations.ProductSerialization;
-import com.codecool.shop.service.ProductService;
-import com.codecool.shop.service.UserService;
+import com.codecool.shop.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.ServletException;
@@ -32,6 +32,12 @@ public class ProductsSupplierJSON extends HttpServlet {
         String linkId = request.getParameter("id");
         Integer id = null;
 
+
+        ApplicationService applicationService = ApplicationService.getInstance();
+        SupplierDao supplierDao = applicationService.getSupplierDao();
+        ProductDao productDao = applicationService.getProductDao();
+
+
         try {
             id = Integer.parseInt(linkId);
         } catch (NumberFormatException e) {
@@ -41,12 +47,17 @@ public class ProductsSupplierJSON extends HttpServlet {
         if (id == null || id < 1) {
             id = 1;
         }
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
 
-        String products = writeListToJsonArray(productService.getProductsForSupplier(id));
+        Supplier supplier =  supplierDao.find(id);
+        List<Product> productsList = productDao.getBy(supplier);
+//        var productList = applicationService.getProductDao().getBy(category);
+
+
+        String products = writeListToJsonArray(productsList);
         System.out.println(products);
         PrintWriter out = response.getWriter();
         out.println(products);
@@ -67,20 +78,25 @@ public class ProductsSupplierJSON extends HttpServlet {
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
 
-        UserDao userDao = UserDaoMem.getInstance();
-        CartDao cartDao = CartDaoMem.getInstance();
-        UserService users = new UserService(userDao, cartDao);
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+//        UserDao userDao = UserDaoMem.getInstance();
+//        CartDao cartDao = CartDaoMem.getInstance();
+//        UserService users = new UserService(userDao, cartDao);
+//        ProductDao productDataStore = ProductDaoMem.getInstance();
+//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
+//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
+//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+
+        ApplicationService applicationService = ApplicationService.getInstance();
+        SupplierDao supplierDao = applicationService.getSupplierDao();
+
+
         boolean added = false;
 
         if(params.containsKey("name") && params.containsKey("password")){
-            User user= users.getUser(params.get("name"));
+            User user = applicationService.getUserDao().getUserByName(params.get("name"));
 
             if(user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN){
-                added = productService.addSupplier(params.get("supplier"));
+                added = supplierDao.isSupplierMissing(params.get("supplier"));
             }
         }
 

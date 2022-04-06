@@ -1,4 +1,4 @@
-package com.codecool.shop.dao.implementation;
+package com.codecool.shop.dao.implementationMem;
 
 import com.codecool.shop.dao.SupplierDao;
 import com.codecool.shop.model.Supplier;
@@ -28,6 +28,25 @@ public class SupplierDaoMem implements SupplierDao {
         supplier.setId(data.size() + 1);
         data.add(supplier);
     }
+
+
+    public boolean isSupplierMissing(String name) {
+        name = name.toLowerCase();
+        boolean shouldAdd = true;
+        for (Supplier value : data) {
+            if (value.getName().equals(name)) {
+                shouldAdd = false;
+                break;
+            }
+        }
+        if (shouldAdd) {
+            Supplier supplier = new Supplier(name);
+            add(supplier);
+        }
+
+        return shouldAdd;
+    }
+
 
     @Override
     public Supplier find(int id) {
