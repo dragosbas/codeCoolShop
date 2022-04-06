@@ -3,14 +3,12 @@ package com.codecool.shop.model;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Data
 public class Cart {
-
+    private UUID id;
+    private UUID ownerId;
     private Map<Product, Integer> cartItems = new HashMap<>();
 
         public void add (Product product){
