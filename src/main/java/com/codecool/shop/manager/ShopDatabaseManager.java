@@ -20,7 +20,7 @@ public class ShopDatabaseManager {
     }
      
 
-    private DataSource connect() throws SQLException {
+    public DataSource connect() throws SQLException {
         PGSimpleDataSource dataSource = new PGSimpleDataSource();
         ApplicationProperties properties = new ApplicationProperties();
         dataSource.setDatabaseName(properties.readProperty("database"));

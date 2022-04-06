@@ -3,7 +3,11 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
 import com.codecool.shop.dao.implementationMem.*;
+import com.codecool.shop.manager.ShopDatabaseManager;
 import com.codecool.shop.utils.Persistence;
+
+import javax.sql.DataSource;
+import java.sql.SQLException;
 
 public  class ApplicationService {
     private static ApplicationService instance = null;
@@ -14,6 +18,7 @@ public  class ApplicationService {
     ProductCategoryDao productCategoryDao;
     SupplierDao supplierDao;
     UserDao userDao;
+    DataSource dataSource;
 
     private Persistence persistence;
 
@@ -41,15 +46,22 @@ public  class ApplicationService {
         if (persistence == Persistence.JDBC) {
             //todo CategoryDaoJdbc si restul ca singletone
             //todo DatabaseManager
+            ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
+            try {
+                this.dataSource = shopDatabaseManager.connect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
 
-//            cartDao = CartDaoMem.getInstance();
-//            orderDao = OrderDaoMem.getInstance();
-//            productCategoryDao = ProductCategoryDaoMem.getInstance();
-//            productDao = ProductDaoMem.getInstance();
-//            supplierDao = SupplierDaoMem.getInstance();
-//            userDao = UserDaoMem.getInstance();
+            cartDao = CartDaoJdbc.getInstance();
+//            orderDao = OrderDaoJdbc.getInstance();
+//            productCategoryDao = ProductCategoryDaoJdbc.getInstance();
+//            productDao = ProductDaoJdbc.getInstance();
+//            supplierDao = SupplierDaoJdbc.getInstance();
+//            userDao = UserDaoJdbc.getInstance();
 
-//            ((CartDaoJdbc)cartDao).setConnection();
+            establishConnection();
+
         } else if (persistence == Persistence.MEMORY) {
 
             cartDao = CartDaoMem.getInstance();
@@ -60,15 +72,21 @@ public  class ApplicationService {
             userDao = UserDaoMem.getInstance();
 
 
-//            OrderService orderService = new OrderService(orderDao, cartDao);
-//            ProductService productService = new ProductService(productDao, productCategoryDao, supplierDao);
-//            UserService userService = new UserService(userDao, cartDao);
 
-//            return new InMemAppService(orderService, productService, userService);
-            // plus setConnection pentru fiecare jdbc
         }
 
     }
+
+    private void establishConnection() {
+        ((CartDaoJdbc)cartDao).establishConnection(dataSource);
+//        ((OrderDaoJdbc)orderDao).establishConnection(dataSource);
+//        ((productCategoryDaoJdbc)productCategoryDao).establishConnection(dataSource);
+//        ((supplierDaoJdbc)supplierDao).establishConnection(dataSource);
+//        ((productDaoJdbc)productDao).establishConnection(dataSource);
+//        ((supplierDaoJdbc)supplierDao).establishConnection(dataSource);
+//        ((userDaoJdbc)userDao).establishConnection(dataSource);
+    }
+
 
     public CartDao getCartDao() {
         return cartDao;
