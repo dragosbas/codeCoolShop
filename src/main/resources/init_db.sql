@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS Order_Item;
+-- DROP TABLE IF EXISTS Order_Item;
+DROP TABLE If EXISTS Cart_Items;
 DROP TABLE IF EXISTS Products;
 DROP TABLE IF EXISTS Suppliers;
 DROP TABLE IF EXISTS Categories;
@@ -48,6 +49,7 @@ CREATE TABLE Cart_Items (
 );
 
 Create TABLE Client_order (
+    Id uuid PRIMARY KEY not null,
     Cart_id uuid REFERENCES Cart (Id),
     User_id uuid REFERENCES Users (Id),
     Address VARCHAR(255),

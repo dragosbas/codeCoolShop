@@ -2,6 +2,7 @@ package com.codecool.shop.service;
 
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
+import com.codecool.shop.dao.implementationJdbc.OrderDaoJdbc;
 import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.manager.ShopDatabaseManager;
 import com.codecool.shop.utils.Persistence;
@@ -54,12 +55,12 @@ public  class ApplicationService {
             }
 
             cartDao = CartDaoJdbc.getInstance();
-//            orderDao = OrderDaoJdbc.getInstance();
+            orderDao = OrderDaoJdbc.getInstance();
 //            productCategoryDao = ProductCategoryDaoJdbc.getInstance();
 //            productDao = ProductDaoJdbc.getInstance();
 //            supplierDao = SupplierDaoJdbc.getInstance();
 //            userDao = UserDaoJdbc.getInstance();
-            orderDao = OrderDaoMem.getInstance();
+//            orderDao = OrderDaoMem.getInstance();
             productCategoryDao = ProductCategoryDaoMem.getInstance();
             productDao = ProductDaoMem.getInstance();
             supplierDao = SupplierDaoMem.getInstance();
@@ -84,7 +85,7 @@ public  class ApplicationService {
 
     private void establishConnection() {
         ((CartDaoJdbc)cartDao).establishConnection(dataSource);
-//        ((OrderDaoJdbc)orderDao).establishConnection(dataSource);
+        ((OrderDaoJdbc)orderDao).establishConnection(dataSource);
 //        ((productCategoryDaoJdbc)productCategoryDao).establishConnection(dataSource);
 //        ((supplierDaoJdbc)supplierDao).establishConnection(dataSource);
 //        ((productDaoJdbc)productDao).establishConnection(dataSource);

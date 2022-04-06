@@ -60,10 +60,11 @@ public class CartDaoJdbc implements CartDao {
                 updateCartItemsAdd(product, cartId);
             } else {
                 String sqlCartItems = "INSERT INTO cart_items (cart_id, product_id, quantity) VALUES (?, ?, ?)";
-                PreparedStatement st2 = conn.prepareStatement(sqlCartItems, Statement.RETURN_GENERATED_KEYS);
-                st2.setObject(1, cartId);
-                st2.setObject(2, product.getId());
-                st2.setInt(3, 1);
+                PreparedStatement st = conn.prepareStatement(sqlCartItems, Statement.RETURN_GENERATED_KEYS);
+                st.setObject(1, cartId);
+                st.setObject(2, product.getId());
+                st.setInt(3, 1);
+                st.executeUpdate();
             }
 
 
