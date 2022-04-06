@@ -20,6 +20,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 
 @WebServlet(name = "prodsBySupplierServlet", urlPatterns = "/api/products/supplier", loadOnStartup = 3)
@@ -30,22 +31,22 @@ public class ProductsSupplierJSON extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         String linkId = request.getParameter("id");
-        Integer id = null;
+        UUID id = null;
 
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
         SupplierDao supplierDao = applicationService.getSupplierDao();
         ProductDao productDao = applicationService.getProductDao();
 
 
         try {
-            id = Integer.parseInt(linkId);
+            id = UUID.fromString(linkId);
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-
-        if (id == null || id < 1) {
-            id = 1;
+//??
+        if (id == null) {
+            id = UUID.randomUUID();
         }
 //        ProductDao productDataStore = ProductDaoMem.getInstance();
 //        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
@@ -86,7 +87,7 @@ public class ProductsSupplierJSON extends HttpServlet {
 //        SupplierDao supplierDao= SupplierDaoMem.getInstance();
 //        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
         SupplierDao supplierDao = applicationService.getSupplierDao();
 
 

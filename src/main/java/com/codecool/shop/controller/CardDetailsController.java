@@ -22,7 +22,7 @@ public class CardDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService =new ApplicationService();
 
 //        OrderService orderService = applicationService.getOrderService();
 

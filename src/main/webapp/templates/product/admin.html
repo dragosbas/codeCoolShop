@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <div th:replace="header.html :: header"></div>
+    <script type="module" src="/static/js/admin.js" defer></script>
+</head>
+
+<body>
+<nav th:replace="header.html :: navigation"></nav>
+
+<div id="db-form">
+    <span>In memory</span>
+    <label class="switch">
+        <input type="checkbox">
+        <span class="slider round"></span>
+    </label>
+    <span>Database</span>
+</div>
+
+
+<div id="???-form">
+
+</div>
+
+
+</body>
+
+<div th:replace="footer.html :: copy"></div>
+
+</html>

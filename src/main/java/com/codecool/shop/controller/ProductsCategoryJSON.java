@@ -20,28 +20,29 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @WebServlet(name = "prodsByCategoryServlet", urlPatterns = "/api/products/category", loadOnStartup = 2)
 public class ProductsCategoryJSON extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
         String linkId = request.getParameter("id");
-        Integer id = null;
+        UUID id = null;
 
         try{
-            id = Integer.parseInt(linkId);
+            id = UUID.fromString(linkId);
         }
         catch (NumberFormatException e){
             e.printStackTrace();
         }
 
-        if(id == null || id < 1){
-            id = 1;
+        if(id == null ){
+            id = UUID.randomUUID();
         }
 
         ProductDao productDataStore = ProductDaoMem.getInstance();
@@ -72,7 +73,7 @@ public class ProductsCategoryJSON extends HttpServlet {
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
 
 

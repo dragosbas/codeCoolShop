@@ -3,6 +3,7 @@ package com.codecool.shop.service;
 import com.codecool.shop.dao.*;
 import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
 import com.codecool.shop.dao.implementationMem.*;
+import com.codecool.shop.manager.DatabaseManager;
 import com.codecool.shop.manager.ShopDatabaseManager;
 import com.codecool.shop.utils.Persistence;
 
@@ -20,30 +21,9 @@ public  class ApplicationService {
     UserDao userDao;
     DataSource dataSource;
 
-    private Persistence persistence;
 
-    private ApplicationService() {
-
-    }
-
-    public static ApplicationService getInstance() {
-        if (instance == null) {
-            instance = new ApplicationService();
-        }
-        return instance;
-    }
-
-    public Persistence getPersistence() {
-        return persistence;
-    }
-
-    public void setPersistence(Persistence persistence) {
-        this.persistence = persistence;
-    }
-
-    public void setApplicationService() {
-
-        if (persistence == Persistence.JDBC) {
+    public ApplicationService() {
+        if (!DatabaseManager.isInMemory()) {
             //todo CategoryDaoJdbc si restul ca singletone
             //todo DatabaseManager
             ShopDatabaseManager shopDatabaseManager = new ShopDatabaseManager();
@@ -62,7 +42,7 @@ public  class ApplicationService {
 
             establishConnection();
 
-        } else if (persistence == Persistence.MEMORY) {
+        } else if (DatabaseManager.isInMemory()) {
 
             cartDao = CartDaoMem.getInstance();
             orderDao = OrderDaoMem.getInstance();
@@ -70,11 +50,7 @@ public  class ApplicationService {
             productDao = ProductDaoMem.getInstance();
             supplierDao = SupplierDaoMem.getInstance();
             userDao = UserDaoMem.getInstance();
-
-
-
         }
-
     }
 
     private void establishConnection() {

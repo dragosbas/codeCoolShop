@@ -42,7 +42,7 @@ public class ProductsJSON extends HttpServlet {
 //        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
 
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
         ProductDao productDao =  applicationService.getProductDao();
         SupplierDao supplierDao = applicationService.getSupplierDao();

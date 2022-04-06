@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.UUID;
 
 @WebServlet(urlPatterns = {"/"})
 public class ProductController extends HttpServlet {
@@ -30,7 +31,7 @@ public class ProductController extends HttpServlet {
 //        ProductService productService = applicationService.getProductService();
 //        OrderService orderService = applicationService.getOrderService();
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
@@ -41,7 +42,7 @@ public class ProductController extends HttpServlet {
         context.setVariable("categories", applicationService.getProductCategoryDao().getAll());
 
 //        context.setVariable("category", productService.getProductCategory(1));
-        context.setVariable("category", applicationService.getProductCategoryDao().find(1));
+        context.setVariable("category", applicationService.getProductCategoryDao().find(UUID.randomUUID()));
 //        context.setVariable("products", productService.getAllProducts());
         context.setVariable("products", applicationService.getProductDao().getAll());
         // // Alternative setting of the template context

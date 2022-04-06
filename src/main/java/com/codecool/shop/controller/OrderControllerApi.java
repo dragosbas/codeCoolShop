@@ -26,7 +26,7 @@ public class OrderControllerApi extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
 //        ProductDao productDao = applicationService.getProductDao();
 //        ProductCategoryDao productCategoryDataStore = applicationService.getProductCategoryDao();
@@ -74,12 +74,19 @@ public class OrderControllerApi extends HttpServlet {
 //
 //        OrderService orderService = applicationService.getOrderService();
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService = new ApplicationService();
 
         OrderDao orderDao = applicationService.getOrderDao();
 
         HttpSession session=req.getSession();
-        UUID orderId = (UUID) session.getAttribute("order-id");
+        UUID orderId = null;
+        try{
+            System.out.println(session.getAttribute("order-id"));
+            orderId = UUID.fromString(session.getAttribute("order-id").toString());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         LoggerService l = LoggerService.getInstance();
 
 

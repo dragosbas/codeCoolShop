@@ -19,9 +19,7 @@ public class OrderDaoMem  implements OrderDao {
         return instance;
     }
 
-    private OrderDaoMem(){
-
-    }
+    private OrderDaoMem(){}
 
 
     @Override
@@ -35,8 +33,9 @@ public class OrderDaoMem  implements OrderDao {
     @Override
     public Order getOrder(UUID orderId) {
         for (Order order : orders) {
-            if (order.getOrderId() == orderId)
+            if (order.getOrderId().equals(orderId)) {
                 return order;
+            }
         }
         return null;
     }
