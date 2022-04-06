@@ -35,6 +35,9 @@ public class Initializer implements ServletContextListener {
         // 2 Setezi persistenta
         // 3 Initializezi Dao-urile in funcite de persistena setata la 2!
         ApplicationService applicationService = new ApplicationService();
+//        applicationService.setPersistence(Persistence.JDBC);
+//        applicationService.setApplicationService();
+
 
         //setting up a new supplier
         Supplier amazon = new Supplier("Amazon");

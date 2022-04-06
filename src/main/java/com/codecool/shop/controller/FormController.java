@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Map;
@@ -28,14 +29,23 @@ public class FormController extends HttpServlet {
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 
-        for (Map.Entry<Product, Integer> entry : cart.getCart(UUID.randomUUID()).entrySet()) {
+        HttpSession session=req.getSession();
+        UUID userId = null;
+        try{
+            userId = UUID.fromString(session.getAttribute("user-id").toString());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        for (Map.Entry<Product, Integer> entry : cart.getCart(userId).entrySet()) {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("totalPrice", totalPrice.toString());
-        context.setVariable("cart", cart.getCart(UUID.randomUUID()));
+        context.setVariable("cart", cart.getCart(userId));
 
 
         engine.process("/product/checkout-form.html", context, resp.getWriter());

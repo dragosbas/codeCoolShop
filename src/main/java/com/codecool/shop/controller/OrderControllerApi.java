@@ -37,11 +37,24 @@ public class OrderControllerApi extends HttpServlet {
 
         if (req.getParameter("first-name") != null) {
 
-            CartDao cart= CartDaoMem.getInstance();
+//            CartDao cart= CartDaoMem.getInstance();
 //            OrderService orderService = new OrderService();
 
+
+            HttpSession session=req.getSession();
+            UUID userId = null;
+            try{
+                userId = UUID.fromString(session.getAttribute("user-id").toString());
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+
             Map<String, String> clientDetails = new HashMap<>();
-            CartDao clientCart = cart;
+            CartDao cart = applicationService.getCartDao();
+//            cart.getCart()
+
+
 
 
             clientDetails.put("First Name", req.getParameter("first-name"));
@@ -50,12 +63,12 @@ public class OrderControllerApi extends HttpServlet {
             clientDetails.put("Phone", req.getParameter("phone"));
             clientDetails.put("Address", req.getParameter("address"));
 
-            Order order = orderDao.createOrder(clientDetails, cart);
+            Order order = orderDao.createOrder(clientDetails, cart, userId);
 
 
             try{
 
-                HttpSession session=req.getSession();
+                session = req.getSession();
                 session.setAttribute("order-id", order.getOrderId());
 
 

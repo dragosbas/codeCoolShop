@@ -23,17 +23,17 @@ public class CartDaoMem implements CartDao {
     }
 
     @Override
-    public void addToCart(Product product) {
+    public void addToCart(Product product, UUID userId) {
         cart.add(product);
     }
 
     @Override
-    public void removeFromCart(Product product) {
+    public void removeFromCart(Product product, UUID userId) {
         cart.remove(product);
     }
 
     @Override
-    public Map<Product, Integer> getCart(UUID id) {
+    public Map<Product, Integer> getCart(UUID userId) {
         return cart.getCartItems();
     }
 

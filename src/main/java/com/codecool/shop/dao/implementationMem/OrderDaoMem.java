@@ -23,8 +23,8 @@ public class OrderDaoMem  implements OrderDao {
 
 
     @Override
-    public Order createOrder(Map<String, String> clientDetails, CartDao cart) {
-        Order order = new Order(clientDetails, cart);
+    public Order createOrder(Map<String, String> clientDetails, CartDao cart, UUID ownerId) {
+        Order order = new Order(clientDetails, cart, UUID.randomUUID());
         orders.add(order);
         return order;
 

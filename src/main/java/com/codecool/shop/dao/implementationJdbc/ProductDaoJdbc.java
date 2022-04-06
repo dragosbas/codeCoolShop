@@ -9,6 +9,7 @@ import com.codecool.shop.model.Supplier;
 
 import javax.sql.DataSource;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,7 +40,51 @@ public class ProductDaoJdbc implements ProductDao{
 
     @Override
     public Product find(UUID id) {
-        return null;
+        try(Connection conn = dataSource.getConnection()){
+//            String sql = "SELECT id, name, description, price, supplier_id, category_id FROM products WHERE id = ?";
+            String sql = "SELECT products.id, products.name, " +
+                    "   products.description, " +
+                    "   price, products.supplier_id, " +
+                    "   products.category_id, " +
+                    "   c.name, " +
+                    "   c.description, " +
+                    "   s.name, " +
+                    "   s.description, " +
+                    "   products.img " +
+                    "FROM products " +
+                    "JOIN categories c ON c.id = products.category_id " +
+                    "JOIN suppliers s ON products.supplier_id = s.id; ";
+            PreparedStatement st = conn.prepareStatement(sql);
+//            st.setObject(1, id);
+            ResultSet rs = st.executeQuery();
+            if (!rs.next()){
+                return null;
+            }
+
+
+            ProductCategory pc = new ProductCategory(rs.getString(7),"", rs.getString(8));
+            pc.setId(UUID.fromString(rs.getString(6)));
+            Supplier s = new Supplier(rs.getString(9));
+            s.setId(UUID.fromString(rs.getString(5)));
+            Product p = new Product(rs.getString(2),rs.getBigDecimal(4),"USD", rs.getString(3), pc, s, "img");
+            p.setId(UUID.fromString(rs.getString(1)));
+            p.setDescription(rs.getString(3));
+
+
+            return p;
+
+//            String title = rs.getString(2);
+//            int authorId = rs.getInt(1);
+//            Author author = authorDao.get(authorId);
+//
+//            Book book = new Book(author, title);
+//            book.setId(id);
+//            return book;
+
+
+        }catch (SQLException e ){
+            throw new RuntimeException();
+        }
     }
 
     @Override
@@ -63,15 +108,16 @@ public class ProductDaoJdbc implements ProductDao{
                     "   c.name, " +
                     "   c.description, " +
                     "   s.name, " +
-                    "   s.description " +
+                    "   s.description, " +
+                    "   products.img " +
                     "FROM products " +
                     "JOIN categories c ON c.id = products.category_id " +
                     "JOIN suppliers s ON products.supplier_id = s.id; ";
             ResultSet rs = conn.createStatement().executeQuery(sql);
 
-            if (!rs.next()) {
-                return null;
-            }
+//            if (!rs.next()) {
+//                return null;
+//            }
             List<Product> result = new ArrayList<>();
 
             while(rs.next()){
@@ -79,7 +125,7 @@ public class ProductDaoJdbc implements ProductDao{
                 pc.setId(UUID.fromString(rs.getString(6)));
                 Supplier s = new Supplier(rs.getString(9));
                 s.setId(UUID.fromString(rs.getString(5)));
-                Product p = new Product(rs.getString(2),rs.getBigDecimal(4),"USD", rs.getString(3), pc, s, "img");
+                Product p = new Product(rs.getString(2),rs.getBigDecimal(4),"USD", rs.getString(3), pc, s, rs.getString(11));
                 p.setId(UUID.fromString(rs.getString(1)));
                 p.setDescription(rs.getString(3));
                 result.add(p);
