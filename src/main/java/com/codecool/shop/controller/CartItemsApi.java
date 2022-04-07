@@ -48,7 +48,7 @@ public class CartItemsApi extends HttpServlet {
         HttpSession session=req.getSession();
         UUID userId = null;
         try{
-            userId = UUID.fromString((String) session.getAttribute("user-id"));
+            userId = (UUID)session.getAttribute("user-id");
             System.out.println(session.getAttribute("user-id"));
         }
         catch (Exception e){
