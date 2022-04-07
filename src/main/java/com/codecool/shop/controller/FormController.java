@@ -48,7 +48,11 @@ public class FormController extends HttpServlet {
         context.setVariable("cart", cart.getCart(userId));
 
 
-        engine.process("/product/checkout-form.html", context, resp.getWriter());
+        if (session.getAttribute("user-name") != null) {
+            engine.process("/product/checkout-form.html", context, resp.getWriter());
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
 
     }
 

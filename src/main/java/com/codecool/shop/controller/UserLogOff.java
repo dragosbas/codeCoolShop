@@ -18,6 +18,7 @@ public class UserLogOff extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         try{
             HttpSession session = req.getSession();
+            session.removeAttribute("user-name");
             session.setAttribute("user-id", UUID.randomUUID());
 
         }catch (Exception e ){

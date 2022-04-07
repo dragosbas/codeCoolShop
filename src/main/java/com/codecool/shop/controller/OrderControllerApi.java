@@ -72,10 +72,16 @@ public class OrderControllerApi extends HttpServlet {
                 session.setAttribute("order-id", order.getOrderId());
 
 
-            }catch(Exception e){System.out.println(e);}
+            }catch(Exception e){e.printStackTrace();}
 
 
-            resp.sendRedirect(req.getContextPath() + "/card-payment");
+
+
+            if (session.getAttribute("user-name") != null) {
+                resp.sendRedirect(req.getContextPath() + "/card-payment");
+            } else {
+                resp.sendRedirect(req.getContextPath() + "/login");
+            }
         }
     }
 
