@@ -62,6 +62,10 @@ public class CartItemsApi extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        ApplicationService applicationService = new ApplicationService();
+
+
         HttpSession session=req.getSession();
         UUID userId = null;
         try{
@@ -79,9 +83,10 @@ public class CartItemsApi extends HttpServlet {
             buffer.append(line);
         }
         Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
-        CartDao cartDao = CartDaoMem.getInstance();
-        ProductDao productDataStore = ProductDaoMem.getInstance();
+
+        ProductDao productDataStore = applicationService.getProductDao();
+        CartDao cartDao = applicationService.getCartDao();
 //        cartDao.removeFromCart(productDataStore.find(jsonpObject.get("itemId")));
-        cartDao.removeFromCart(productDataStore.find(jsonpObject.get("itemId")), userId);
+        cartDao.removeFromCart(productDataStore.find(UUID.fromString(jsonpObject.get("itemId"))), userId);
     }
 }
