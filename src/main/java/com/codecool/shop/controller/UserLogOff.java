@@ -19,7 +19,8 @@ public class UserLogOff extends HttpServlet {
         try{
             HttpSession session = req.getSession();
             session.removeAttribute("user-name");
-            session.setAttribute("user-id", UUID.randomUUID());
+//            session.setAttribute("user-id", UUID.randomUUID());
+            session.removeAttribute("user-id");
             resp.sendRedirect(req.getContextPath() + "/");
 
         }catch (Exception e ){
