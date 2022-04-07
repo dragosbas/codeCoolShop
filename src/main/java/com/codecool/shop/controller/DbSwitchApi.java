@@ -2,7 +2,9 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
+import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.manager.DatabaseManager;
+import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,9 +45,16 @@ public class DbSwitchApi extends HttpServlet{
             e.printStackTrace();
         }
 
-        //todo check if admin
-        if(true){
+        UserDao userDao = applicationService.getUserDao();
+
+        User user =  userDao.getUserById(userId);
+
+
+
+        if (user.getId() == UUID.fromString("b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15")){
             DatabaseManager.switchBetweenDb_InMem();
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/");
         }
 
     }

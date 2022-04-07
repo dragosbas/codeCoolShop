@@ -50,7 +50,13 @@ public class RegisterApi extends HttpServlet {
         catch (Exception e){
             e.printStackTrace();
         }
-        userDao.addUser(userName,hashedPassword,email, Role.USER,userId);
+        User addedUsers =  userDao.addUser(userName,hashedPassword,email, Role.USER,userId);
+
+        //a.k.a., a fost adaugat in db
+        if (addedUsers != null) {;
+            session.setAttribute("user-name", userName);
+        }
+
         System.out.println("current user id = " + userId);
         resp.sendRedirect(req.getContextPath() + "/");
 
