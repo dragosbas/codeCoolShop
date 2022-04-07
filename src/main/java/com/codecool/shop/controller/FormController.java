@@ -30,7 +30,7 @@ public class FormController extends HttpServlet {
 
         ApplicationService applicationService = new ApplicationService();
 
-        CartDao cart= applicationService.getCartDao();
+        CartDao cartDao= applicationService.getCartDao();
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 
@@ -55,7 +55,7 @@ public class FormController extends HttpServlet {
         boolean isRegistered = visitor.getName() != null;
         boolean isAdmin = visitor.getRole() == Role.ADMIN;
 
-        for (Map.Entry<Product, Integer> entry : cart.getCart(userId).entrySet()) {
+        for (Map.Entry<Product, Integer> entry : cartDao.getCart(userId).entrySet()) {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
@@ -64,7 +64,7 @@ public class FormController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("totalPrice", totalPrice.toString());
-        context.setVariable("cart", cart.getCart(userId));
+        context.setVariable("cart", cartDao.getCart(userId));
         context.setVariable("isRegistered", isRegistered);
         context.setVariable("isAdmin", isAdmin);
 
