@@ -1,9 +1,11 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.config.TemplateEngineUtil;
+import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -23,6 +25,7 @@ public class ProductController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         ApplicationService applicationService = new ApplicationService();
+        UserDao userDao =  applicationService.getUserDao();
 
         HttpSession session = req.getSession();
         User visitor = null;
@@ -33,7 +36,7 @@ public class ProductController extends HttpServlet {
         if(visitor == null){
             visitor = new User();
             if((UUID) session.getAttribute("user-id") != null){
-                visitor.setId(UUID.randomUUID());
+                visitor.setId((UUID) session.getAttribute("user-id"));
             }
             else{
                 visitor.setId(UUID.randomUUID());
@@ -43,6 +46,11 @@ public class ProductController extends HttpServlet {
 
         boolean isRegistered = visitor.getName() != null;
         boolean isAdmin = visitor.getRole() == Role.ADMIN;
+
+        if (session.getAttribute("user-name") == null) {
+
+            userDao.addUser(null, null, null, null, visitor.getId());
+        }
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());

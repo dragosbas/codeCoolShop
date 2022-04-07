@@ -43,10 +43,23 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public User addUser(String name, String password, String email, Role role, UUID userId) {
-        if(userId == null){
+        if (userId == null) {
             userId = UUID.randomUUID();
         }
         try (Connection conn = dataSource.getConnection()) {
+            //CHECK IF ID EXISTS, IF DOES, UPDATE DETAILS
+
+
+            UUID tempId = isIdAlreadyInDb(userId);
+            //todo check if works
+            if (tempId != null) {
+                User createdUser = updateUser(userId, name, password, email, role);
+                if (createdUser != null && createdUser.getName() != null) {
+                    return createdUser;
+                }
+                return null;
+            }
+
             if (!isUsernameTaken(name, email)) {
                 String sqlCartItems = "INSERT INTO users (id, user_name, password,email,role) VALUES (?, ?, ?, ?, ?)";
                 PreparedStatement st = conn.prepareStatement(sqlCartItems, Statement.RETURN_GENERATED_KEYS);
@@ -54,7 +67,11 @@ public class UserDaoJdbc implements UserDao {
                 st.setString(2, name);
                 st.setString(3, password);
                 st.setString(4, email);
-                st.setObject(5, role.toString());
+                if (role != null) {
+                    st.setObject(5, role.toString());
+                } else {
+                    st.setObject(5, null);
+                }
                 st.executeUpdate();
                 User user = new User();
                 user.setId(userId);
@@ -68,6 +85,50 @@ public class UserDaoJdbc implements UserDao {
             throw new RuntimeException(e);
         }
 
+    }
+
+
+    private User updateUser(UUID userId, String name, String password, String email, Role role) {
+        if (name != null) {
+            try (Connection conn = dataSource.getConnection()) {
+                String sql = "UPDATE users SET email = ?, user_name = ?, password = ?, role =  ?  WHERE id = ?";
+                PreparedStatement st = conn.prepareStatement(sql);
+                st.setString(1, email);
+                st.setString(2, name);
+                st.setString(3, password);
+                st.setObject(4, role.toString());
+                st.setObject(5 , userId);
+                st.executeUpdate();
+                User user =  new User();
+                user.setEmail(email);
+                user.setName(name);
+                user.setId(userId);
+                user.setRole(role);
+                return user;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return null;
+        }
+
+    }
+
+
+    private UUID isIdAlreadyInDb(UUID userId) {
+        try (Connection conn = dataSource.getConnection()) {
+            String sql = "SELECT id FROM users WHERE id = ?";
+            PreparedStatement st = conn.prepareStatement(sql);
+            st.setObject(1, userId);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return (UUID) rs.getObject(1);
+            }
+            return null;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -121,10 +182,9 @@ public class UserDaoJdbc implements UserDao {
                 user.setId((UUID) rs.getObject("id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
-                if(rs.getString("role").equalsIgnoreCase("admin")){
+                if (rs.getString("role") != null && rs.getString("role").equalsIgnoreCase("admin")) {
                     user.setRole(Role.ADMIN);
-                }
-                else{
+                } else {
                     user.setRole(Role.USER);
                 }
 
