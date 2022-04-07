@@ -53,7 +53,7 @@ public class ProductDaoJdbc implements ProductDao{
                     "   products.img " +
                     "FROM products " +
                     "JOIN categories c ON c.id = products.category_id " +
-                    "JOIN suppliers s ON products.supplier_id = s.id" +
+                    "JOIN suppliers s ON products.supplier_id = s.id " +
                     "WHERE products.id = ?; ";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setObject(1, id);
