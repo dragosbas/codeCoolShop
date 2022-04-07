@@ -1,6 +1,10 @@
 package com.codecool.shop.controller;
 
 
+import com.codecool.shop.config.TemplateEngineUtil;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.WebContext;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,7 +17,11 @@ public class RegisterApi extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(req.getContextPath() + "/");
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
+
+
+        engine.process("/product/register.html", context, resp.getWriter());
     }
 
     @Override
