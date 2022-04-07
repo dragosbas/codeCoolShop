@@ -46,6 +46,7 @@ public class LoginController extends HttpServlet {
         if(attempting != null && BCrypt.checkpw(password, attempting.getPassword())){
             HttpSession session = req.getSession();
             session.setAttribute("user-id", attempting.getId());
+            session.setAttribute("user-name", userName);
             resp.sendRedirect(req.getContextPath() + "/");
         } else {
             resp.sendRedirect(req.getContextPath() + "/register");
