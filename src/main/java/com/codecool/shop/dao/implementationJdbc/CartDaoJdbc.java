@@ -150,8 +150,8 @@ public class CartDaoJdbc implements CartDao {
 
         try(Connection conn = dataSource.getConnection()){
 
-            if (getItemsNumberInCartItems(product, userId) > 1) {
-                updateCartItemsRemove(product, userId);
+            if (getItemsNumberInCartItems(product, cartId) > 1) {
+                updateCartItemsRemove(product, cartId);
             } else {
                 String sql = "DELETE FROM cart_items WHERE product_id = ? AND cart_id = ?";
                 PreparedStatement st = conn.prepareStatement(sql);
