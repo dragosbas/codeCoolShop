@@ -5,6 +5,9 @@ import com.codecool.shop.dao.CartDao;
 
 import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Role;
+import com.codecool.shop.model.User;
+import com.codecool.shop.service.ApplicationService;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -25,28 +28,45 @@ public class FormController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        CartDao cart= CartDaoMem.getInstance();
+        ApplicationService applicationService = new ApplicationService();
+
+        CartDao cart= applicationService.getCartDao();
 
         BigDecimal totalPrice = BigDecimal.ZERO;
 
         HttpSession session=req.getSession();
-        UUID userId = null;
-        try{
-            userId = UUID.fromString(session.getAttribute("user-id").toString());
+
+        User visitor = null;
+        UUID userId = (UUID) session.getAttribute("user-id");
+        if(userId != null){
+            visitor = applicationService.getUserDao().getUserById(userId);
         }
-        catch (Exception e){
-            e.printStackTrace();
+        if(visitor == null){
+            visitor = new User();
+            if((UUID) session.getAttribute("user-id") != null){
+                visitor.setId(UUID.randomUUID());
+            }
+            else{
+                visitor.setId(UUID.randomUUID());
+            }
+            session.setAttribute("user-id", visitor.getId());
         }
+
+        boolean isRegistered = visitor.getName() != null;
+        boolean isAdmin = visitor.getRole() == Role.ADMIN;
 
         for (Map.Entry<Product, Integer> entry : cart.getCart(userId).entrySet()) {
             totalPrice = totalPrice.add(entry.getKey().getDefaultPrice().multiply(BigDecimal.valueOf(entry.getValue())));
         }
 
+
+
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
         context.setVariable("totalPrice", totalPrice.toString());
         context.setVariable("cart", cart.getCart(userId));
-
+        context.setVariable("isRegistered", isRegistered);
+        context.setVariable("isAdmin", isAdmin);
 
         if (session.getAttribute("user-name") != null) {
             engine.process("/product/checkout-form.html", context, resp.getWriter());
