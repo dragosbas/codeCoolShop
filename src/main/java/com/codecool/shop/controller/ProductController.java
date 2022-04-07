@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
@@ -19,18 +20,6 @@ public class ProductController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
-//        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
-//        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
-//
-//        ProductDao productDao   = applicationService.getProductDao();
-//        ProductCategoryDao  productCategoryDataStore = applicationService.getProductCategoryDao();
-//        SupplierDao supplierDao = applicationService.getSupplierDao();
-//        ProductService productService = applicationService.getProductService();
-//        OrderService orderService = applicationService.getOrderService();
 
         ApplicationService applicationService = new ApplicationService();
 
@@ -38,32 +27,29 @@ public class ProductController extends HttpServlet {
         try{
 
             HttpSession session = req.getSession();
-            session.setAttribute("user-id", "b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15");
+            session.setAttribute("user-id", UUID.randomUUID());
             System.out.println(session.getAttribute("user-id"));
             userId = UUID.fromString(session.getAttribute("user-id").toString());
 
 
         }catch(Exception e){System.out.println(e);}
 
+        User visitor = applicationService.getUserDao().getUserById(userId);
 
+        boolean isRegistered = visitor.getName() != null;
 
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-//        context.setVariable("suppliers", supplierDao.getAll());
+
         context.setVariable("suppliers", applicationService.getSupplierDao().getAll());
-//        context.setVariable("categories", productCategoryDataStore.getAll());
+
         context.setVariable("categories", applicationService.getProductCategoryDao().getAll());
 
-//        context.setVariable("category", productService.getProductCategory(1));
         context.setVariable("category", applicationService.getProductCategoryDao().find(userId));
-//        context.setVariable("products", productService.getAllProducts());
+
         context.setVariable("products", applicationService.getProductDao().getAll());
-        // // Alternative setting of the template context
-        // Map<String, Object> params = new HashMap<>();
-        // params.put("category", productCategoryDataStore.find(1));
-        // params.put("products", productDataStore.getBy(productCategoryDataStore.find(1)));
-        // context.setVariables(params);
+
         engine.process("product/index.html", context, resp.getWriter());
     }
 

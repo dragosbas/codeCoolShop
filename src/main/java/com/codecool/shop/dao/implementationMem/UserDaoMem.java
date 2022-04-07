@@ -25,7 +25,7 @@ public class UserDaoMem implements UserDao {
     }
 
     @Override
-    public User addUser(String name, String password, String email, Role role) {
+    public User addUser(String name, String password, String email, Role role, UUID userId) {
         User user = new User();
         user.setName(name);
         user.setEmail(email);

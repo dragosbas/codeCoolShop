@@ -1,11 +1,7 @@
 package com.codecool.shop.service;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementationJdbc.CartDaoJdbc;
-import com.codecool.shop.dao.implementationJdbc.ProductCategoryDaoJdbc;
-import com.codecool.shop.dao.implementationJdbc.ProductDaoJdbc;
-import com.codecool.shop.dao.implementationJdbc.SupplierDaoJdbc;
-import com.codecool.shop.dao.implementationJdbc.OrderDaoJdbc;
+import com.codecool.shop.dao.implementationJdbc.*;
 import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.manager.DatabaseManager;
 import com.codecool.shop.manager.ShopDatabaseManager;
@@ -38,27 +34,19 @@ public  class ApplicationService {
             }
 
             cartDao = CartDaoJdbc.getInstance();
-//            orderDao = OrderDaoJdbc.getInstance();
             productCategoryDao = ProductCategoryDaoJdbc.getInstance();
             productDao = ProductDaoJdbc.getInstance();
             supplierDao = SupplierDaoJdbc.getInstance();
             orderDao = OrderDaoJdbc.getInstance();
-//            productCategoryDao = ProductCategoryDaoJdbc.getInstance();
-//            productDao = ProductDaoJdbc.getInstance();
-//            supplierDao = SupplierDaoJdbc.getInstance();
-//            userDao = UserDaoJdbc.getInstance();
-//            orderDao = OrderDaoMem.getInstance();
-//            productCategoryDao = ProductCategoryDaoMem.getInstance();
-//            productDao = ProductDaoMem.getInstance();
-//            supplierDao = SupplierDaoMem.getInstance();
-//            userDao = UserDaoMem.getInstance();
+            userDao = UserDaoJdbc.getInstance();
 
             ((CartDaoJdbc) cartDao).establishConnection(dataSource);
             ((OrderDaoJdbc) orderDao).establishConnection(dataSource);
             ((ProductDaoJdbc) productDao).establishConnection(dataSource);
             ((SupplierDaoJdbc) supplierDao).establishConnection(dataSource);
             ((ProductCategoryDaoJdbc) productCategoryDao).establishConnection(dataSource);
-//            establishConnection();
+            ((UserDaoJdbc)userDao).establishConnection(dataSource);
+
 
         }
         else if (DatabaseManager.isInMemory()) {

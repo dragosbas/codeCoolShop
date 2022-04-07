@@ -23,7 +23,7 @@ public class CardDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationService applicationService =new ApplicationService();
+        ApplicationService applicationService = new ApplicationService();
 
 //        OrderService orderService = applicationService.getOrderService();
 
@@ -36,18 +36,22 @@ public class CardDetailsController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        HttpSession session=req.getSession();
+        HttpSession session = req.getSession();
         UUID userId = null;
-        try{
+        try {
             userId = UUID.fromString(session.getAttribute("user-id").toString());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         context.setVariable("cart", cart.getCart(userId));
 //        context.setVariable("order", order);
 
-        engine.process("/product/card-payment.html", context, resp.getWriter());
+
+        if (session.getAttribute("user-name") != null) {
+            engine.process("/product/card-payment.html", context, resp.getWriter());
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/login");
+        }
     }
 }
