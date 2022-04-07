@@ -40,7 +40,8 @@ public class OrderDaoJdbc implements OrderDao {
 
                 String sqlCartItems = "INSERT INTO client_order (id, cart_id, user_id, address, phone_number, first_name, last_name, email) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 PreparedStatement st = conn.prepareStatement(sqlCartItems, Statement.RETURN_GENERATED_KEYS);
-                st.setObject(1, UUID.randomUUID());
+                UUID idToBeInserted = UUID.randomUUID();
+                st.setObject(1, idToBeInserted);
                 st.setObject(2, cartId);
                 st.setObject(3, userId);
                 st.setString(4, clientDetails.get("Address"));
@@ -51,8 +52,7 @@ public class OrderDaoJdbc implements OrderDao {
                 st.executeUpdate();
 
 
-//            return order;
-            return null;
+            return getOrder(idToBeInserted);
             } catch (SQLException e){
                 throw new RuntimeException(e);
             }
@@ -98,8 +98,11 @@ public class OrderDaoJdbc implements OrderDao {
 
             Order order = new Order(clientDetails, cartDao, cart.getOwnerId());
             order.setOwnerId((UUID) rs.getObject(2));
+            order.setOrderId(orderID);
+//            var order = new Order(clientDetails, cartDao, cart.getOwnerId();
 
-            return new Order(clientDetails, cartDao, cart.getOwnerId());
+//            return new Order(clientDetails, cartDao, cart.getOwnerId());
+            return order;
 
         }catch (SQLException e ){
             throw new RuntimeException();
