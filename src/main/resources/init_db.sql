@@ -185,6 +185,7 @@ CREATE TABLE Products (
 
 CREATE TABLE Users (
                        Id uuid PRIMARY KEY NOT NULL,
+                       Email VARCHAR(50),
                        User_name VARCHAR(50),
                        Password VARCHAR(2555),
                        Email VARCHAR(255),
@@ -237,6 +238,7 @@ WHERE cart.ownerid = 'b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15';
 
 INSERT INTO users (id, user_name, password, role) VALUES (
                                                              'b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15',
+                                                             'ADMIN@ADMIN.COM'
                                                              'ADMIN',
                                                              'ADMIN',
                                                              'ADMIN'
