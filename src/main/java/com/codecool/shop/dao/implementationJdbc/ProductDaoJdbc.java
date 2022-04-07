@@ -53,7 +53,7 @@ public class ProductDaoJdbc implements ProductDao{
                     "   products.img " +
                     "FROM products " +
                     "JOIN categories c ON c.id = products.category_id " +
-                    "JOIN suppliers s ON products.supplier_id = s.id" +
+                    "JOIN suppliers s ON products.supplier_id = s.id " +
                     "WHERE products.id = ?; ";
             PreparedStatement st = conn.prepareStatement(sql);
             st.setObject(1, id);
@@ -71,15 +71,6 @@ public class ProductDaoJdbc implements ProductDao{
             p.setDescription(rs.getString(3));
 
             return p;
-
-//            String title = rs.getString(2);
-//            int authorId = rs.getInt(1);
-//            Author author = authorDao.get(authorId);
-//
-//            Book book = new Book(author, title);
-//            book.setId(id);
-//            return book;
-
 
         }catch (SQLException e ){
             throw new RuntimeException();
