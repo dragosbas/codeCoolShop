@@ -38,7 +38,7 @@ public class ProductController extends HttpServlet {
         try{
 
             HttpSession session = req.getSession();
-            session.setAttribute("user-id", "b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15");
+            session.setAttribute("user-id", UUID.randomUUID());
             System.out.println(session.getAttribute("user-id"));
             userId = UUID.fromString(session.getAttribute("user-id").toString());
 

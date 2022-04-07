@@ -13,20 +13,22 @@
 <nav th:replace="header.html :: navigation"></nav>
 
 <div>
-    <form>
+    <form method="post" action="/register">
         <label for="username">Username: </label>
         <input type="text" id="username" name="username"/>
+
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email"/>
 
         <label for="password">Password: </label>
         <input type="password" id="password" name="password"/>
 
         <label for="confirm">Confirm password: </label>
-        <input id="confirm" name="confirm"/>
+        <input type="password" id="confirm" name="confirm"/>
 
-        <span><a>Submit</a></span>
+        <span><button type="submit" >Submit</button></span>
     </form>
 </div>
-
 
 
 <div th:replace="footer.html :: copy"></div>

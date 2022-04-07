@@ -8,7 +8,7 @@ import java.util.UUID;
 
 public interface UserDao {
 
-    User addUser(String name, String password, String email, Role role);
+    User addUser(String name, String password, String email, Role role, UUID userId);
     void removeUser(UUID id);
     void changePassword(UUID userid, String oldPassword, String newPassword);
     Cart getCart(UUID userid);

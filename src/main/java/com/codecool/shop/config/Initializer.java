@@ -19,6 +19,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 @WebListener
 public class Initializer implements ServletContextListener {
@@ -57,6 +58,6 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("MacBook Noob",new BigDecimal("1200"),"USD","Laptop pt Robert wannabee s",laptop,amazon,"https://lcdn.altex.ro/resize/media/catalog/product/M/a/2bd48d28d1c32adea0e55139a4e6434a/MacBook_Pro_13in_Silver-1.jpg"));
         productDataStore.add(new Product("Lenovo",new BigDecimal("1000"),"USD","Laptopul praf al lui Dragos",laptop,amazon,"https://cdn.pocket-lint.com/r/s/1200x/assets/images/135517-laptops-review-lenovo-y50-review-image4-vnGZ3qtRKT.jpg"));
         //creating an admin
-        userDaoStore.addUser("admin", "admin", "admin@email.com", Role.ADMIN);
+        userDaoStore.addUser("admin", "admin", "admin@email.com", Role.ADMIN, UUID.randomUUID());
     }
 }
