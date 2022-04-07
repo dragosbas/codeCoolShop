@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 @WebServlet(name = "loginRoute", urlPatterns = "/login", loadOnStartup = 12)
 public class LoginController extends HttpServlet {
@@ -38,10 +40,15 @@ public class LoginController extends HttpServlet {
 
         User attempting = userDao.getUserByName(userName);
 
-        if(BCrypt.checkpw(password, attempting.getPassword())){
+
+
+
+        if(attempting != null && BCrypt.checkpw(password, attempting.getPassword())){
             HttpSession session = req.getSession();
             session.setAttribute("user-id", attempting.getId());
             resp.sendRedirect(req.getContextPath() + "/");
-        };
+        } else {
+            resp.sendRedirect(req.getContextPath() + "/register");
+        }
     }
 }
