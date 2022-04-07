@@ -5,6 +5,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.Role;
+import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
