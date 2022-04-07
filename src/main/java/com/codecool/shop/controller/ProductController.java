@@ -1,5 +1,6 @@
 package com.codecool.shop.controller;
 
+import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.config.TemplateEngineUtil;
@@ -23,24 +24,30 @@ public class ProductController extends HttpServlet {
 
         ApplicationService applicationService = new ApplicationService();
 
-        UUID userId = null;
-        try{
-
-            HttpSession session = req.getSession();
-            session.setAttribute("user-id", UUID.randomUUID());
-            System.out.println(session.getAttribute("user-id"));
-            userId = UUID.fromString(session.getAttribute("user-id").toString());
-
-
-        }catch(Exception e){System.out.println(e);}
-
-        User visitor = applicationService.getUserDao().getUserById(userId);
+        HttpSession session = req.getSession();
+        User visitor = null;
+        UUID userId = (UUID) session.getAttribute("user-id");
+        if(userId != null){
+             visitor = applicationService.getUserDao().getUserById(userId);
+        }
+        if(visitor == null){
+            visitor = new User();
+            if((UUID) session.getAttribute("user-id") != null){
+                visitor.setId(UUID.randomUUID());
+            }
+            else{
+                visitor.setId(UUID.randomUUID());
+            }
+            session.setAttribute("user-id", visitor.getId());
+        }
 
         boolean isRegistered = visitor.getName() != null;
-
+        boolean isAdmin = visitor.getRole() == Role.ADMIN;
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
+        context.setVariable("isRegistered", isRegistered);
+        context.setVariable("isAdmin", isAdmin);
 
         context.setVariable("suppliers", applicationService.getSupplierDao().getAll());
 
