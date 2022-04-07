@@ -27,4 +27,10 @@ public class Order {
         this.orderId = UUID.randomUUID();
         this.ownerId = ownerId;
     }
+
+
+    public void setOrderConfirmed(boolean b){
+        orderConfirmed = b;
+        cartDao.emptyCart();
+    }
 }

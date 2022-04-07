@@ -109,8 +109,8 @@ public class OrderControllerApi extends HttpServlet {
 
 
 //        Order currentOrder = orderService.getOrder(orderId);
-            Order currentOrder = orderDao.getOrder(orderId);
 
+        Order currentOrder = orderDao.getOrder(orderId);
         //TODO add to DB, next sprint
         l.log(currentOrder);
         currentOrder.setOrderConfirmed(true);
