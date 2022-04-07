@@ -72,15 +72,6 @@ public class ProductDaoJdbc implements ProductDao{
 
             return p;
 
-//            String title = rs.getString(2);
-//            int authorId = rs.getInt(1);
-//            Author author = authorDao.get(authorId);
-//
-//            Book book = new Book(author, title);
-//            book.setId(id);
-//            return book;
-
-
         }catch (SQLException e ){
             throw new RuntimeException();
         }
