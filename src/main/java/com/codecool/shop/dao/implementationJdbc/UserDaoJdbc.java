@@ -130,7 +130,7 @@ public class UserDaoJdbc implements UserDao {
     @Override
     public User getUserByName(String name) {
         try (Connection conn = dataSource.getConnection()) {
-            String sqlUser = "SELECT * FROM users WHERE user_name = ?";
+            String sqlUser = "SELECT * FROM users WHERE LOWER(user_name) = LOWER(?)";
             PreparedStatement st = conn.prepareStatement(sqlUser);
             st.setObject(1, name);
             ResultSet rs = st.executeQuery();
@@ -139,7 +139,8 @@ public class UserDaoJdbc implements UserDao {
                 user.setId((UUID) rs.getObject("id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
-                user.setRole(Role.USER);
+                user.setPassword(rs.getString("password"));
+                user.setRole(Role.valueOf(rs.getString("role")));
             }
             return user;
         } catch (SQLException e) {
