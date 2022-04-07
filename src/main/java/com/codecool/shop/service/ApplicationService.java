@@ -34,20 +34,11 @@ public  class ApplicationService {
             }
 
             cartDao = CartDaoJdbc.getInstance();
-//            orderDao = OrderDaoJdbc.getInstance();
             productCategoryDao = ProductCategoryDaoJdbc.getInstance();
             productDao = ProductDaoJdbc.getInstance();
             supplierDao = SupplierDaoJdbc.getInstance();
             orderDao = OrderDaoJdbc.getInstance();
-//            productCategoryDao = ProductCategoryDaoJdbc.getInstance();
-//            productDao = ProductDaoJdbc.getInstance();
-//            supplierDao = SupplierDaoJdbc.getInstance();
             userDao = UserDaoJdbc.getInstance();
-//            orderDao = OrderDaoMem.getInstance();
-//            productCategoryDao = ProductCategoryDaoMem.getInstance();
-//            productDao = ProductDaoMem.getInstance();
-//            supplierDao = SupplierDaoMem.getInstance();
-//            userDao = UserDaoMem.getInstance();
 
             ((CartDaoJdbc) cartDao).establishConnection(dataSource);
             ((OrderDaoJdbc) orderDao).establishConnection(dataSource);
@@ -55,7 +46,7 @@ public  class ApplicationService {
             ((SupplierDaoJdbc) supplierDao).establishConnection(dataSource);
             ((ProductCategoryDaoJdbc) productCategoryDao).establishConnection(dataSource);
             ((UserDaoJdbc)userDao).establishConnection(dataSource);
-//            establishConnection();
+
 
         }
         else if (DatabaseManager.isInMemory()) {

@@ -186,7 +186,8 @@ CREATE TABLE Products (
 CREATE TABLE Users (
                        Id uuid PRIMARY KEY NOT NULL,
                        User_name VARCHAR(50),
-                       Password VARCHAR(255),
+                       Password VARCHAR(2555),
+                       Email VARCHAR(255),
                        Role VARCHAR(20)
 );
 
