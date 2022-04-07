@@ -169,14 +169,15 @@ public class CartDaoJdbc implements CartDao {
 //            String sql = "SELECT cart_items.quantity, products.name, products.description, products.price, suppliers.name, suppliers.description, category.name, category.description FROM cart WHERE ownerid = ?";
             String sql = "SELECT\n" +
                     "       ci.quantity products_quantity,\n" +
-                    "       p.id, " +
+                    "       p.id," +
                     "       p.name product_name,\n" +
                     "       p.description product_description,\n" +
                     "       p.price product_price,\n" +
                     "       s.name supplier_name,\n" +
                     "       s.description supplier_description,\n" +
                     "       c.name category_name,\n" +
-                    "       c.description category_nescription\n" +
+                    "       c.description category_nescription\n, " +
+                    "       p.img " +
                     "\n" +
                     "FROM cart\n" +
                     "INNER JOIN cart_items ci on cart.id = ci.cart_id\n" +
@@ -192,7 +193,7 @@ public class CartDaoJdbc implements CartDao {
             while (rs.next()) {
                 ProductCategory category = new ProductCategory(rs.getString(8), "Tech", rs.getString(9));
                 Supplier supplier = new Supplier(rs.getString(7));
-                Product product = new Product(rs.getString(3), rs.getBigDecimal(5), "USD", rs.getString(4), category, supplier, "https://storage.googleapis.com/flip-global/device-images/apple_iphone-6s_space-grey_sell_mip@_1000.jpg");
+                Product product = new Product(rs.getString(3), rs.getBigDecimal(5), "USD", rs.getString(4), category, supplier, rs.getString(10));
                 product.setId((UUID) rs.getObject(2));
                 result.put(product, rs.getInt(1));
             }
