@@ -5,6 +5,7 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.Role;
+import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import org.mindrot.jbcrypt.BCrypt;
 import org.thymeleaf.TemplateEngine;
@@ -27,7 +28,7 @@ public class RegisterApi extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
-        engine.process("/product/register.html", context, resp.getWriter());
+        engine.process("/register.html", context, resp.getWriter());
     }
 
     @Override
@@ -50,7 +51,7 @@ public class RegisterApi extends HttpServlet {
         catch (Exception e){
             e.printStackTrace();
         }
-        User addedUsers =  userDao.addUser(userName,hashedPassword,email, Role.USER,userId);
+        User addedUsers = userDao.addUser(userName,hashedPassword,email, Role.USER,userId);
 
         //a.k.a., a fost adaugat in db
         if (addedUsers != null) {;
