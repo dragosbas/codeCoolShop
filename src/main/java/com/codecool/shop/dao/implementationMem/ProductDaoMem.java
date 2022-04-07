@@ -11,6 +11,8 @@ import com.codecool.shop.model.Supplier;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class ProductDaoMem implements ProductDao {
@@ -37,7 +39,7 @@ public class ProductDaoMem implements ProductDao {
 
     @Override
     public void add(Product product) {
-        product.setId(data.size() + 1);
+        product.setId(UUID.randomUUID());
         data.add(product);
     }
 
@@ -83,12 +85,18 @@ public class ProductDaoMem implements ProductDao {
 
 
     @Override
-    public Product find(int id) {
-        return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
+    public Product find(UUID id) {
+        for (Product product : data) {
+            if (product.getId().equals(id)) {
+                return product;
+            }
+        }
+
+        return null;
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(UUID id) {
         data.remove(find(id));
     }
 

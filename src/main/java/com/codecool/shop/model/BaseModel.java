@@ -6,13 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseModel {
 
-    protected int id;
+    protected UUID id;
     protected String name;
     protected String description;
 
@@ -28,18 +29,18 @@ public class BaseModel {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        for (Field field : this.getClass().getDeclaredFields()) {
-            field.setAccessible(true);
-            Object value = null;
-            try {
-                value = field.get(this);
-                if (value != null) {
-                    sb.append(field.getName() + ":" + value + ",");
-                }
-            } catch (IllegalAccessException e) {
-
-            }
-        }
+//        for (Field field : this.getClass().getDeclaredFields()) {
+//            field.setAccessible(true);
+//            Object value = null;
+//            try {
+//                value = field.get(this);
+//                if (value != null) {
+//                    sb.append(field.getName() + ":" + value + ",");
+//                }
+//            } catch (IllegalAccessException e) {
+//
+//            }
+//        }
         return sb.toString();
     }
 

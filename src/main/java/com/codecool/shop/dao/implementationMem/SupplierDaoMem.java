@@ -5,6 +5,7 @@ import com.codecool.shop.model.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class SupplierDaoMem implements SupplierDao {
 
@@ -25,7 +26,7 @@ public class SupplierDaoMem implements SupplierDao {
 
     @Override
     public void add(Supplier supplier) {
-        supplier.setId(data.size() + 1);
+        supplier.setId(UUID.randomUUID());
         data.add(supplier);
     }
 
@@ -49,12 +50,12 @@ public class SupplierDaoMem implements SupplierDao {
 
 
     @Override
-    public Supplier find(int id) {
+    public Supplier find(UUID id) {
         return data.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 
     @Override
-    public void remove(int id) {
+    public void remove(UUID id) {
         data.remove(find(id));
     }
 

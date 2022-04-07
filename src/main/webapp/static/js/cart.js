@@ -48,6 +48,8 @@ function removeFromCart(event) {
 }
 
 const addProduct = (id) => {
+    console.log("in add product")
+    console.log(id)
     const itemId = {
         itemId:  id
     }

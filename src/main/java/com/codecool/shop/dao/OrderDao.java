@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface OrderDao {
 
-    Order createOrder(Map<String, String> clientDetails, CartDao cart);
+    Order createOrder(Map<String, String> clientDetails, CartDao cart, UUID userId);
 
     //TODO idk how what is the parameter to get the order, probably a client id
     Order getOrder(UUID orderID);

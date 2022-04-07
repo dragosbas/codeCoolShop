@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class CardDetailsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        ApplicationService applicationService = ApplicationService.getInstance();
+        ApplicationService applicationService =new ApplicationService();
 
 //        OrderService orderService = applicationService.getOrderService();
 
@@ -35,8 +36,16 @@ public class CardDetailsController extends HttpServlet {
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
 
+        HttpSession session=req.getSession();
+        UUID userId = null;
+        try{
+            userId = UUID.fromString(session.getAttribute("user-id").toString());
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
 
-        context.setVariable("cart", cart.getCart(UUID.randomUUID()));
+        context.setVariable("cart", cart.getCart(userId));
 //        context.setVariable("order", order);
 
         engine.process("/product/card-payment.html", context, resp.getWriter());

@@ -20,4 +20,5 @@ target/
 hs_err_pid*
 
 src/assets/*
+/src/main/resources/codecoolshop.properties
 
