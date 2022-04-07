@@ -43,6 +43,9 @@ public class UserDaoJdbc implements UserDao {
 
     @Override
     public User addUser(String name, String password, String email, Role role, UUID userId) {
+        if(userId == null){
+            userId = UUID.randomUUID();
+        }
         try (Connection conn = dataSource.getConnection()) {
             if (!isUsernameTaken(name, email)) {
                 String sqlCartItems = "INSERT INTO users (id, user_name, password,email,role) VALUES (?, ?, ?, ?, ?)";
@@ -118,7 +121,13 @@ public class UserDaoJdbc implements UserDao {
                 user.setId((UUID) rs.getObject("id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
-                user.setRole(Role.USER);
+                if(rs.getString("role").equalsIgnoreCase("admin")){
+                    user.setRole(Role.ADMIN);
+                }
+                else{
+                    user.setRole(Role.USER);
+                }
+
             }
             return user;
         } catch (SQLException e) {

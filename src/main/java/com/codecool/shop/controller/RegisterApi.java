@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.UUID;
 
 @WebServlet(name = "registerApi", urlPatterns = "/register", loadOnStartup = 9)
@@ -39,8 +38,6 @@ public class RegisterApi extends HttpServlet {
         String userName = req.getParameter("username");
         String password = req.getParameter("password");
         String email = req.getParameter("email");
-//        char[] charPassword = password.toCharArray();
-//        var charHashedPassword = BCrypt.withDefaults().hash(5, charPassword);
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         HttpSession session = req.getSession();
@@ -51,7 +48,7 @@ public class RegisterApi extends HttpServlet {
         catch (Exception e){
             e.printStackTrace();
         }
-        User addedUsers = userDao.addUser(userName,hashedPassword,email, Role.USER,userId);
+        User addedUsers = userDao.addUser(userName,hashedPassword,email, Role.USER, userId);
 
         //a.k.a., a fost adaugat in db
         if (addedUsers != null) {;
