@@ -37,6 +37,7 @@ public class CartItemsApi extends HttpServlet {
         CartDao cartDao =  applicationService.getCartDao();
 
         Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
+        System.out.println(jsonpObject.get("itemId"));
 //        CartDao cartDao = CartDaoMem.getInstance();
         ProductDao productDataStore = applicationService.getProductDao();
         // Product p = productDataStore.find(UUID.fromString(jsonpObject.get("itemId")));

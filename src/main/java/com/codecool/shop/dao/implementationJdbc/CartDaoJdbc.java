@@ -169,6 +169,7 @@ public class CartDaoJdbc implements CartDao {
 //            String sql = "SELECT cart_items.quantity, products.name, products.description, products.price, suppliers.name, suppliers.description, category.name, category.description FROM cart WHERE ownerid = ?";
             String sql = "SELECT\n" +
                     "       ci.quantity products_quantity,\n" +
+                    "       p.id, " +
                     "       p.name product_name,\n" +
                     "       p.description product_description,\n" +
                     "       p.price product_price,\n" +
@@ -189,9 +190,10 @@ public class CartDaoJdbc implements CartDao {
 
             Map<Product, Integer> result = new HashMap<>();
             while (rs.next()) {
-                ProductCategory category = new ProductCategory(rs.getString(7), "Tech", rs.getString(8));
-                Supplier supplier = new Supplier(rs.getString(5));
-                Product product = new Product(rs.getString(2), rs.getBigDecimal(4), "USD", rs.getString(3), category, supplier, "https://storage.googleapis.com/flip-global/device-images/apple_iphone-6s_space-grey_sell_mip@_1000.jpg");
+                ProductCategory category = new ProductCategory(rs.getString(8), "Tech", rs.getString(9));
+                Supplier supplier = new Supplier(rs.getString(7));
+                Product product = new Product(rs.getString(3), rs.getBigDecimal(5), "USD", rs.getString(4), category, supplier, "https://storage.googleapis.com/flip-global/device-images/apple_iphone-6s_space-grey_sell_mip@_1000.jpg");
+                product.setId((UUID) rs.getObject(2));
                 result.put(product, rs.getInt(1));
             }
             return result;
