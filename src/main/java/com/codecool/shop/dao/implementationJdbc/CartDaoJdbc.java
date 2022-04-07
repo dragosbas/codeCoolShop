@@ -36,25 +36,14 @@ public class CartDaoJdbc implements CartDao {
     @Override
     public void addToCart(Product product, UUID userId) {
 
-        UUID cartId = getCartId(userId);
 
+        UUID cartId = getCartId(userId);
+        if (cartId == null) {
+            cartId = createCart(userId);
+        }
 
 
         try(Connection conn = dataSource.getConnection()){
-            //todo create this cart when a user registers
-
-//            Cart cartID =  new Cart();
-
-
-//            String sqlCart = "INSERT INTO cart (id, ownerid) VALUES (?, ?)";
-//            PreparedStatement st1 = conn.prepareStatement(sqlCart, Statement.RETURN_GENERATED_KEYS);
-//            st1.setObject(1, cart.getId());
-//            st1.setObject(2, cart.getOwnerId());
-//            st1.executeUpdate();
-//            ResultSet rs = st1.getGeneratedKeys();
-//            rs.next();
-//            book.setId(rs.getInt(1));
-
 
             if (getItemsNumberInCartItems(product, cartId) > 0) {
                 updateCartItemsAdd(product, cartId);
@@ -67,12 +56,28 @@ public class CartDaoJdbc implements CartDao {
                 st.executeUpdate();
             }
 
-
         }catch (SQLException e){
             throw new RuntimeException(e);
         }
     }
 
+
+    private UUID createCart(UUID userId) {
+
+        try(Connection conn = dataSource.getConnection()){
+
+            String sqlCart = "INSERT INTO cart (id, ownerid) VALUES (?, ?)";
+            PreparedStatement st1 = conn.prepareStatement(sqlCart, Statement.RETURN_GENERATED_KEYS);
+            UUID cartId = UUID.randomUUID();
+            st1.setObject(1, cartId);
+            st1.setObject(2, userId);
+            st1.executeUpdate();
+            return cartId;
+        } catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+    }
 
     private UUID getCartId(UUID userId) {
         try(Connection conn = dataSource.getConnection()) {
