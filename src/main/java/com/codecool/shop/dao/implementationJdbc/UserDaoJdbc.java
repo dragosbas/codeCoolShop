@@ -143,15 +143,17 @@ public class UserDaoJdbc implements UserDao {
             PreparedStatement st = conn.prepareStatement(sqlUser);
             st.setObject(1, name);
             ResultSet rs = st.executeQuery();
-            User user = new User();
-            while (rs.next()) {
+
+            if (rs.next()) {
+                User user = new User();
                 user.setId((UUID) rs.getObject("id"));
                 user.setName(rs.getString("user_name"));
                 user.setEmail(rs.getString("email"));
                 user.setPassword(rs.getString("password"));
                 user.setRole(Role.valueOf(rs.getString("role")));
+                return user;
             }
-            return user;
+            return null;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

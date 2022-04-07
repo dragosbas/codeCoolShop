@@ -20,6 +20,7 @@ public class UserLogOff extends HttpServlet {
             HttpSession session = req.getSession();
             session.removeAttribute("user-name");
             session.setAttribute("user-id", UUID.randomUUID());
+            resp.sendRedirect(req.getContextPath() + "/");
 
         }catch (Exception e ){
             e.printStackTrace();
