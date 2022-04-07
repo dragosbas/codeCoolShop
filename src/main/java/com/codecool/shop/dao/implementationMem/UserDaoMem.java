@@ -52,7 +52,10 @@ public class UserDaoMem implements UserDao {
 
     @Override
     public User getUserById(UUID id) {
-        return users.stream().filter(user -> user.getId() == id).findFirst().get();
+        if (users.size() > 1) {
+            return users.stream().filter(user -> user.getId() == id).findFirst().get();
+        }
+        return null;
     }
 
     @Override

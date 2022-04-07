@@ -4,6 +4,7 @@ import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.manager.DatabaseManager;
+import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,7 +39,7 @@ public class DbSwitchApi extends HttpServlet{
         HttpSession session=req.getSession();
         UUID userId = null;
         try{
-            userId = UUID.fromString((String) session.getAttribute("user-id"));
+            userId = UUID.fromString(session.getAttribute("user-id").toString());
             System.out.println(session.getAttribute("user-id"));
         }
         catch (Exception e){
@@ -51,8 +52,9 @@ public class DbSwitchApi extends HttpServlet{
 
 
 
-        if (user.getId() == UUID.fromString("b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15")){
+        if (user.getRole() == Role.ADMIN){
             DatabaseManager.switchBetweenDb_InMem();
+            userDao.addUser("ROBERT999", "robert2", "robert@robert.com", Role.ADMIN, UUID.randomUUID());
         } else {
             resp.sendRedirect(req.getContextPath() + "/");
         }

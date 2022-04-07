@@ -52,7 +52,7 @@ public class AdminController extends HttpServlet {
 
         User user =  userDao.getUserById(userId);
 
-        if (user.getId() == UUID.fromString("b0eebc93-9c0b-4ef8-bb6d-6bb9bd380a15")) {
+        if (user.getRole() == Role.ADMIN) {
             engine.process("/product/admin.html", context, resp.getWriter());
         } else {
             resp.sendRedirect(req.getContextPath() + "/");
