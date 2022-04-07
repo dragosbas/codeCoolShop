@@ -53,14 +53,14 @@ public class ProductDaoJdbc implements ProductDao{
                     "   products.img " +
                     "FROM products " +
                     "JOIN categories c ON c.id = products.category_id " +
-                    "JOIN suppliers s ON products.supplier_id = s.id; ";
+                    "JOIN suppliers s ON products.supplier_id = s.id" +
+                    "WHERE products.id = ?; ";
             PreparedStatement st = conn.prepareStatement(sql);
-//            st.setObject(1, id);
+            st.setObject(1, id);
             ResultSet rs = st.executeQuery();
             if (!rs.next()){
                 return null;
             }
-
 
             ProductCategory pc = new ProductCategory(rs.getString(7),"", rs.getString(8));
             pc.setId(UUID.fromString(rs.getString(6)));
@@ -69,7 +69,6 @@ public class ProductDaoJdbc implements ProductDao{
             Product p = new Product(rs.getString(2),rs.getBigDecimal(4),"USD", rs.getString(3), pc, s, "img");
             p.setId(UUID.fromString(rs.getString(1)));
             p.setDescription(rs.getString(3));
-
 
             return p;
 
