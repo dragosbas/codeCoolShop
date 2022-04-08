@@ -25,6 +25,12 @@ public class DbSwitchApi extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(DatabaseManager.isInMemory()){
+            DatabaseManager.switchBetweenDb_InMem();
+            resp.sendRedirect(req.getContextPath() + "/");
+            return;
+        }
+
         ObjectMapper objectMapper= new ObjectMapper();
 
         StringBuffer buffer = new StringBuffer();
@@ -58,6 +64,5 @@ public class DbSwitchApi extends HttpServlet{
         } else {
             resp.sendRedirect(req.getContextPath() + "/");
         }
-
     }
 }
