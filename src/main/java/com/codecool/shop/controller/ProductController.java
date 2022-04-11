@@ -5,7 +5,6 @@ import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.config.TemplateEngineUtil;
-import com.fasterxml.jackson.databind.deser.impl.ValueInjector;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 

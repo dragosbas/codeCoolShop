@@ -2,7 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Order;
 import com.codecool.shop.service.ApplicationService;
 import com.codecool.shop.utils.LoggerService;
@@ -28,17 +27,13 @@ public class OrderControllerApi extends HttpServlet {
 
         ApplicationService applicationService = new ApplicationService();
 
-//        ProductDao productDao = applicationService.getProductDao();
-//        ProductCategoryDao productCategoryDataStore = applicationService.getProductCategoryDao();
-//        SupplierDao supplierDao = applicationService.getSupplierDao();
-//        ProductService productService = applicationService.getProductService();
+
             OrderDao orderDao = applicationService.getOrderDao();
 
 
         if (req.getParameter("first-name") != null) {
 
-//            CartDao cart= CartDaoMem.getInstance();
-//            OrderService orderService = new OrderService();
+
 
 
             HttpSession session=req.getSession();
@@ -52,9 +47,6 @@ public class OrderControllerApi extends HttpServlet {
 
             Map<String, String> clientDetails = new HashMap<>();
             CartDao cart = applicationService.getCartDao();
-//            cart.getCart()
-
-
 
 
             clientDetails.put("First Name", req.getParameter("first-name"));
@@ -87,11 +79,6 @@ public class OrderControllerApi extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-//        ApplicationServiceFactory applicationServiceFactory = new ApplicationServiceFactory();
-//        ApplicationService applicationService = applicationServiceFactory.getApplicationService(false);
-//
-//        OrderService orderService = applicationService.getOrderService();
 
         ApplicationService applicationService = new ApplicationService();
 

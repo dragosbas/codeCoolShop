@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 
-
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.UserDao;
 import com.codecool.shop.model.Role;
@@ -50,7 +49,6 @@ public class RegisterApi extends HttpServlet {
         }
         User addedUsers = userDao.addUser(userName,hashedPassword,email, Role.USER, userId);
 
-        //a.k.a., a fost adaugat in db
         if (addedUsers != null) {;
             session.setAttribute("user-name", userName);
         }

@@ -3,7 +3,6 @@ package com.codecool.shop.controller;
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
 
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;

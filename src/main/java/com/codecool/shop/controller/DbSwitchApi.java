@@ -31,7 +31,6 @@ public class DbSwitchApi extends HttpServlet{
             return;
         }
 
-        ObjectMapper objectMapper= new ObjectMapper();
 
         StringBuffer buffer = new StringBuffer();
         BufferedReader reader = req.getReader();

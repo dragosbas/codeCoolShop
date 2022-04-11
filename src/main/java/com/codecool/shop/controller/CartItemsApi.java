@@ -2,8 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.CartDao;
 import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
-import com.codecool.shop.dao.implementationMem.ProductDaoMem;
 import com.codecool.shop.service.ApplicationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -38,17 +36,13 @@ public class CartItemsApi extends HttpServlet {
 
         Map<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), Map.class);
         System.out.println(jsonpObject.get("itemId"));
-//        CartDao cartDao = CartDaoMem.getInstance();
         ProductDao productDataStore = applicationService.getProductDao();
-        // Product p = productDataStore.find(UUID.fromString(jsonpObject.get("itemId")));
-        // cartDao.addToCart(p);
 
 
 
         HttpSession session=req.getSession();
         UUID userId = null;
         try{
-//            userId = UUID.fromString((String) session.getAttribute("user-id"));
             userId = UUID.fromString(session.getAttribute("user-id").toString());
             System.out.println(session.getAttribute("user-id"));
         }
@@ -56,7 +50,6 @@ public class CartItemsApi extends HttpServlet {
             e.printStackTrace();
         }
 
-        //todo add this productDataStore.find(UUID.fromString(jsonpObject.get("itemId")))
         cartDao.addToCart(productDataStore.find(UUID.fromString(jsonpObject.get("itemId"))), userId);
     }
 

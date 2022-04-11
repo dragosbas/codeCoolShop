@@ -2,7 +2,6 @@ package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.implementationMem.CartDaoMem;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
@@ -27,7 +26,6 @@ public class CartController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ApplicationService service = new ApplicationService();
         CartDao cart = service.getCartDao();
-//        CartDao cart= CartDaoMem.getInstance();
         ApplicationService applicationService = new ApplicationService();
 
         CartDao cartDao =  applicationService.getCartDao();

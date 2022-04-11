@@ -1,7 +1,6 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.model.Product;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.Supplier;
@@ -44,18 +43,13 @@ public class ProductsSupplierJSON extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-//??
         if (id == null) {
             id = UUID.randomUUID();
         }
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+
 
         Supplier supplier =  supplierDao.find(id);
         List<Product> productsList = productDao.getBy(supplier);
-//        var productList = applicationService.getProductDao().getBy(category);
 
 
         String products = writeListToJsonArray(productsList);
@@ -79,13 +73,6 @@ public class ProductsSupplierJSON extends HttpServlet {
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
 
-//        UserDao userDao = UserDaoMem.getInstance();
-//        CartDao cartDao = CartDaoMem.getInstance();
-//        UserService users = new UserService(userDao, cartDao);
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
 
         ApplicationService applicationService = new ApplicationService();
         SupplierDao supplierDao = applicationService.getSupplierDao();
