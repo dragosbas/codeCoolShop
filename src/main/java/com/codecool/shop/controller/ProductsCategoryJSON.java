@@ -1,9 +1,7 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.*;
-import com.codecool.shop.dao.implementationMem.*;
 import com.codecool.shop.model.Product;
-import com.codecool.shop.model.ProductCategory;
 import com.codecool.shop.model.Role;
 import com.codecool.shop.model.User;
 import com.codecool.shop.serializations.ProductSerialization;
@@ -45,10 +43,9 @@ public class ProductsCategoryJSON extends HttpServlet {
             id = UUID.randomUUID();
         }
 
-        ProductDao productDataStore = ProductDaoMem.getInstance();
-        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore,productCategoryDataStore, supplierDao);
+        ProductDao productDataStore = applicationService.getProductDao();
+        ProductCategoryDao productCategoryDataStore = applicationService.getProductCategoryDao();
+        SupplierDao supplierDao= applicationService.getSupplierDao();
 
         var category =  applicationService.getProductCategoryDao().find(id);
         var productList = applicationService.getProductDao().getBy(category);
@@ -80,13 +77,7 @@ public class ProductsCategoryJSON extends HttpServlet {
         ProductCategoryDao productCategoryDao =  applicationService.getProductCategoryDao();
 
 
-//        UserDao userDao = UserDaoMem.getInstance();
-//        CartDao cartDao = CartDaoMem.getInstance();
-//        UserService users = new UserService(userDao, cartDao);
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao= SupplierDaoMem.getInstance();
-//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
+
         boolean added = false;
 
         System.out.println(params);
@@ -95,13 +86,9 @@ public class ProductsCategoryJSON extends HttpServlet {
 
             User user = applicationService.getUserDao().getUserByName(params.get("name"));
 
-//            User user= users.getUser(params.get("name"));
 
             if(user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN){
-//                if (productCategoryDao.contains(params.get("category"))) productCategoryDao.update(params.get("category"), params.get("department"), params.get("description"));
-//                else productCategoryDao.add();
 
-//                out.println(HttpServletResponse.SC_ACCEPTED);
                 added = productCategoryDao.isCategoryMissing(params.get("category"), params.get("department"), params.get("description"));
             }
         }

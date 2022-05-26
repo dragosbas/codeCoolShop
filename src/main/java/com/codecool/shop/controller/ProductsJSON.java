@@ -21,25 +21,9 @@ public class ProductsJSON extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-// ma astept sa primesc :
-// productNameInput
-// defaultpriceInput
-// defaultcurrencyInput
-// descriptionInput
-// productcategoryInput
-// supplierInput
-// imgInput
+
         ProductSerialization ps = new ProductSerialization();
         Map<String, String> params = ps.parseReqParams(req);
-
-//        UserDao userDao = UserDaoMem.getInstance();
-//        CartDao cartDao = CartDaoMem.getInstance();
-//        UserService users = new UserService(userDao, cartDao);
-//        ProductDao productDataStore = ProductDaoMem.getInstance();
-//        ProductCategoryDao productCategoryDataStore = ProductCategoryDaoMem.getInstance();
-//        SupplierDao supplierDao = SupplierDaoMem.getInstance();
-
-//        ProductService productService = new ProductService(productDataStore, productCategoryDataStore, supplierDao);
 
 
         ApplicationService applicationService = new ApplicationService();
@@ -57,8 +41,7 @@ public class ProductsJSON extends HttpServlet {
             User user = applicationService.getUserDao().getUserByName(params.get("name"));
 
             if (user != null && user.getPassword().equals(params.get("password")) && user.getRole() == Role.ADMIN) {
-//                if (supplierDao)
-                //todo check if contains
+
                 added = productDao.isProductMissing(supplierDao, productCategoryDao, params.get("productname"), params.get("defaultprice"),
                         params.get("defaultCurrency"), params.get("description"),params.get("productCategory"),
                         params.get("supplier"), params.get("img"));

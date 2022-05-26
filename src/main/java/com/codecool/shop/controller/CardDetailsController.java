@@ -17,7 +17,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.UUID;
 
-//TODO after creating the order
 
 @WebServlet(name = "cardPayment", urlPatterns = "/card-payment", loadOnStartup = 7)
 public class CardDetailsController extends HttpServlet {
@@ -27,13 +26,8 @@ public class CardDetailsController extends HttpServlet {
 
         ApplicationService applicationService = new ApplicationService();
 
-//        OrderService orderService = applicationService.getOrderService();
 
         CartDao cart = applicationService.getCartDao();
-
-
-//        CartDao cart= CartDaoMem.getInstance();
-//        OrderService orderService = new OrderService();
 
         TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
         WebContext context = new WebContext(req, resp, req.getServletContext());
@@ -60,7 +54,7 @@ public class CardDetailsController extends HttpServlet {
         boolean isAdmin = visitor.getRole() == Role.ADMIN;
 
         context.setVariable("cart", cart.getCart(userId));
-//        context.setVariable("order", order);
+
 
         context.setVariable("isRegistered", isRegistered);
         context.setVariable("isAdmin", isAdmin);
