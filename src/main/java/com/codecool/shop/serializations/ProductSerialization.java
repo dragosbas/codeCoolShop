@@ -23,8 +23,6 @@ public class ProductSerialization {
 
         System.out.println(buffer.toString());
 
-        HashMap<String,String> jsonpObject = objectMapper.readValue(buffer.toString(), HashMap.class);
-
-        return jsonpObject;
+        return objectMapper.readValue(buffer.toString(), HashMap.class);
     }
 }

@@ -57,7 +57,7 @@ public class Initializer implements ServletContextListener {
         productDataStore.add(new Product("Amazon Fire HD 8", new BigDecimal("89"), "USD", "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", tablet, amazon, "/static/img/product_3.jpg"));
         productDataStore.add(new Product("MacBook Noob",new BigDecimal("1200"),"USD","Laptop pt Robert wannabee s",laptop,amazon,"https://lcdn.altex.ro/resize/media/catalog/product/M/a/2bd48d28d1c32adea0e55139a4e6434a/MacBook_Pro_13in_Silver-1.jpg"));
         productDataStore.add(new Product("Lenovo",new BigDecimal("1000"),"USD","Laptopul praf al lui Dragos",laptop,amazon,"https://cdn.pocket-lint.com/r/s/1200x/assets/images/135517-laptops-review-lenovo-y50-review-image4-vnGZ3qtRKT.jpg"));
-        //creating an admin
-        userDaoStore.addUser("admin", "admin", "admin@email.com", Role.ADMIN, UUID.randomUUID());
+        //creating an admin -> pw: codecool
+        userDaoStore.addUser("admin", "$2a$12$IJD22UF0MSImWbTvd4OMbOsUo8B6SpqcDJ04EzlA.xM7hzoah5bW.", "admin@email.com", Role.ADMIN, UUID.randomUUID());
     }
 }

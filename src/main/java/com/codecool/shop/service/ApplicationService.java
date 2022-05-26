@@ -63,11 +63,6 @@ public  class ApplicationService {
     private void establishConnection() {
         ((CartDaoJdbc)cartDao).establishConnection(dataSource);
         ((OrderDaoJdbc)orderDao).establishConnection(dataSource);
-//        ((productCategoryDaoJdbc)productCategoryDao).establishConnection(dataSource);
-//        ((supplierDaoJdbc)supplierDao).establishConnection(dataSource);
-//        ((productDaoJdbc)productDao).establishConnection(dataSource);
-//        ((supplierDaoJdbc)supplierDao).establishConnection(dataSource);
-//        ((userDaoJdbc)userDao).establishConnection(dataSource);
     }
 
 
