@@ -16,4 +16,9 @@ be changed at runtime by an administrator.
 ![shield](https://img.shields.io/github/license/GligorAvram/CodeCool-shop)
 
 <hr>
+
+## License
+unlicense
+
+<hr>
 </div>
