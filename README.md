@@ -18,6 +18,17 @@ be changed at runtime by an administrator.
 <hr>
 
 
+##Usage
+
+Standard online shop features like product order, cart management. Administrator has the option to change the persistence 
+from in memory to using a database from the administrator console.
+
+![homepage](https://gligoravram.github.io/img/projectscreenshots/codecool%20shop.jpg)
+![cart](https://gligoravram.github.io/img/projectscreenshots/cart%20codecool%20shop.jpg)
+![login](https://gligoravram.github.io/img/projectscreenshots/codecool%20shop%20login.jpg)
+![switch](https://gligoravram.github.io/img/projectscreenshots/db-switch%20codecool%20shop.png)
+<hr>
+
 ## How to contribute
 
 <ol>
