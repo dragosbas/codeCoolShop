@@ -21,4 +21,11 @@ be changed at runtime by an administrator.
 unlicense
 
 <hr>
+
+## You may also like
+
+<ul>
+    <li> <a href="#">Link 1</a> </li>
+    <li> <a href="#">Link 2</a> </li>
+</ul>
 </div>
