@@ -4,7 +4,8 @@
 
 <a href="https://proman-codecool-rng.herokuapp.com/">Turnaround shop</a>
 
-An online shop build using Java servlet technology
+An online shop build using Java servlet technology. The program features dual a dual persistence system that can 
+be changed at runtime by an administrator.
 
 <hr>
 
