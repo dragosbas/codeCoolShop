@@ -11,6 +11,9 @@
 
 <nav th:replace="header.html :: navigation"></nav>
 
+<div th:if="${loginError != null}">
+    <p th:text="${loginError}"></p>
+</div>
 
 <form action="/login" method="post">
     <div class="imgcontainer">
