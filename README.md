@@ -1,52 +1,38 @@
-<div style="text-align: center;">
-
-![Logo](https://gligoravram.github.io/img/turnaround.png)
-
-<a href="https://proman-codecool-rng.herokuapp.com/">Turnaround shop</a>
-
-An online shop build using Java servlet technology. The program features dual a dual persistence system that can 
-be changed at runtime by an administrator.
-
-<hr>
-
-![shield](https://img.shields.io/badge/using-java-green)
-![shield](https://img.shields.io/badge/using-javascript-green)
-![shield](https://img.shields.io/github/issues/GligorAvram/CodeCool-shop)
-![shield](https://img.shields.io/github/stars/GligorAvram/CodeCool-shop)
-![shield](https://img.shields.io/github/license/GligorAvram/CodeCool-shop)
-
-<hr>
+# Codecool Shop
 
 
-##Usage
+Codecool Shop is an online shop, where users can buy different items available, as in a real store. The main interest of the app is that it can have its persistence either in memory or in a database. The site admin can switch the persistence just by pressing a button.
 
-Standard online shop features like product order, cart management. Administrator has the option to change the persistence 
-from in memory to using a database from the administrator console.
+## Tech
 
-![homepage](https://gligoravram.github.io/img/projectscreenshots/codecool%20shop.jpg)
-![cart](https://gligoravram.github.io/img/projectscreenshots/cart%20codecool%20shop.jpg)
-![login](https://gligoravram.github.io/img/projectscreenshots/codecool%20shop%20login.jpg)
-![switch](https://gligoravram.github.io/img/projectscreenshots/db-switch%20codecool%20shop.png)
-<hr>
+Codecool Shop uses a number of open source projects to work properly:
 
-## How to contribute
+- [Maven]
+- [Servlets]
+- [JS]
+- [PostgreSql]
 
-<ol>
-<li>Clone repo and create a new branch: $ git checkout https://github.com/GligorAvram/CodeCool-shop -b name_for_new_branch.</li>
-<li>Make changes and test</li>
-<li>Submit Pull Request with comprehensive description of changes</li>
-</ol>
+## Installation
+
+1. Clone the repo
+     ```sh
+    git clone https://github.com/R0bert196/CodecoolShop
+    ```
+
+2.  Create a new postgresql database for the project.
+    ```sh
+    create db codecoolshop
+    ```
+
+3. Remove the 'template' from application.properties.template and enter your databse connection in appliaction.properites.
 
 
-## License
-unlicense
+4. Run the init_db.sql on your new database connection. The admin user will be inserted in the database.
+ 
+5. Run the project from intelij/ eclipse and enjoy!
 
-<hr>
 
-## You may also like
-
-<ul>
-    <li> <a href="#">Link 1</a> </li>
-    <li> <a href="#">Link 2</a> </li>
-</ul>
-</div>
+[JS]: https://www.javascript.com/
+[Maven]: https://maven.apache.org/
+[Servlets]: https://www.geeksforgeeks.org/introduction-java-servlets/
+[PostgreSQL]: https://www.postgresql.org/
