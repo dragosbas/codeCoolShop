@@ -2,6 +2,9 @@
 
 
 Codecool Shop is an online shop, where users can buy different items available, as in a real store. The main interest of the app is that it can have its persistence either in memory or in a database. The site admin can switch the persistence just by pressing a button.
+
+---
+
 ![homePage](https://i.imgur.com/QSncvll.png) 
 ![homePage2](https://user-images.githubusercontent.com/89275915/171204162-40637ac4-8a21-460a-ada7-f3c277c51a1a.png)
 ![homePage2](https://i.imgur.com/LdRE5X9.png)
