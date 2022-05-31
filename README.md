@@ -5,7 +5,7 @@ Codecool Shop is an online shop, where users can buy different items available, 
 ![homePage](https://i.imgur.com/QSncvll.png) 
 ![homePage2](https://user-images.githubusercontent.com/89275915/171204162-40637ac4-8a21-460a-ada7-f3c277c51a1a.png)
 ![homePage2](https://i.imgur.com/LdRE5X9.png)
-![homePage3](https://imgur.com/15e1eaa6-c82d-4635-9988-bad6c40e57e5)
+![homePage2](https://i.imgur.com/a6gQxDn.png)
 
 
 
