@@ -18,8 +18,10 @@ Codecool Shop uses a number of open source projects to work properly:
 
 - [Maven]
 - [Servlets]
-- [JS]
 - [PostgreSql]
+- [JS]
+- [CSS]
+- [HTML]
 
 ## Installation
 
@@ -45,3 +47,5 @@ Codecool Shop uses a number of open source projects to work properly:
 [Maven]: https://maven.apache.org/
 [Servlets]: https://www.geeksforgeeks.org/introduction-java-servlets/
 [PostgreSQL]: https://www.postgresql.org/
+[CSS]: https://developer.mozilla.org/en-US/docs/Web/CSS
+[HTML]: https://developer.mozilla.org/en-US/docs/Web/HTML
