@@ -49,3 +49,10 @@ Codecool Shop uses a number of open source projects to work properly:
 [PostgreSQL]: https://www.postgresql.org/
 [CSS]: https://developer.mozilla.org/en-US/docs/Web/CSS
 [HTML]: https://developer.mozilla.org/en-US/docs/Web/HTML
+
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+
